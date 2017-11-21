@@ -13,7 +13,7 @@ export const SHOW_INSTRUCTOR_RECORD = "show instructor record";
 export const HIDE_INSTRUCTOR_RECORD = "hide instructor record";
 
 ///////////////////////////////////////////////////////////////////////
-const ROOT_API = "https://chamcong-api.herokuapp.com/api/";
+const ROOT_API = "https://checkyouin-api.herokuapp.com/api/";
 
 const INSTRUCTOR_API = `${ROOT_API}instructors`;
 const INSTRUCTOR_SEARCH_API = `${ROOT_API}instructors?name=`;

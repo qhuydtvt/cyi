@@ -6,7 +6,7 @@ export const SEND_INSTRUCTOR_PAYROLL = 'send instructor payroll';
 export const FETCH_INSTRUCTOR_SALARY = 'fetch salary';
 export const ADJUST_INSTRUCTOR_SALARY = 'adjust salary';
 
-const MANAGEMENT_API = "https://chamcong-api.herokuapp.com/api/management/";
+const MANAGEMENT_API = "https://checkyouin-api.herokuapp.com/api/management/";
 
 const FETCH_SUMMARY_API = `${MANAGEMENT_API}summary`
 const FETCH_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll`
