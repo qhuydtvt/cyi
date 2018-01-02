@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Login from './login';
 import Checkin from './checkin';
 import CheckinSummary from './user/checkin-summary';
-import Management from './management'
+import Management from './management';
 
 import { loadState, logout } from '../actions';
 

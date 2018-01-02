@@ -11,12 +11,15 @@ import Flatpickr from 'react-flatpickr';
 import { fetchSummary,
         fetchInstructorPayroll,
         sendPayroll,
-        fetchInstructorSalary } from '../actions';
+        fetchInstructorSalary,
+        fetchCourse
+        } from '../actions';
 
 import SearchBar from './search_bar';
 import User from './user';
 import AdjustSalary from './management/adjust-salary';
 import InstructorPayroll from './management/instructor-payroll';
+import ManageCourse from './management/course';
 
 class Management extends Component {
 
@@ -187,6 +190,11 @@ class Management extends Component {
         <AdjustSalary />
       )
     }
+    else if(summary.manageCourse) {
+      return (
+        <ManageCourse />
+      )
+    }
     else {
       return (
         <div className="container mt-3">
@@ -206,6 +214,15 @@ class Management extends Component {
             }
             <User />
           </div>
+          <div className='my-3 float-right'>
+            <button className='btn btn-primary mr-3'>
+              <i className='fa fa-users mr-3'></i>Quản lý giảng viên
+            </button>
+            <button className='btn btn-primary' onClick={event => this.props.fetchCourse()}>
+              <i className='fa fa-book mr-3'></i>Quản lý khóa học
+            </button>
+          </div>
+          <br/>
           {this.renderTime(summary.data.summaryTime)}
           {summary.data.payroll.length ? this.renderSummaryData(summary) : <h4>Không tìm thấy thông tin</h4>}
         </div>
@@ -220,6 +237,10 @@ function mapStateToProps({ summary }) {
 
 export default connect(mapStateToProps,
                         {
-                          fetchSummary, fetchInstructorPayroll, sendPayroll, fetchInstructorSalary
+                          fetchSummary,
+                          fetchInstructorPayroll,
+                          sendPayroll,
+                          fetchInstructorSalary,
+                          fetchCourse
                         }
                      )(Management);

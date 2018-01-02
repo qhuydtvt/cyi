@@ -4,19 +4,28 @@ import { FETCH_SUMMARY,
         ADJUST_INSTRUCTOR_SALARY,
         REMOVE_INSTRUCTOR_RECORD,
         SEND_INSTRUCTOR_PAYROLL,
-        ADD_INSTRUCTOR_RECORD
+        ADD_INSTRUCTOR_RECORD,
+        FETCH_COURSE,
+        ADD_NEW_COURSE,
+        UPDATE_COURSE,
+        REMOVE_COURSE
       } from '../actions';
 
 import _ from 'lodash';
 
-export default function(state = {startDate: null, endDate: null, name: '', adjustSalary: false}, action) {
+export default function(state = {startDate: null, endDate: null, name: '', adjustSalary: false, manageCourse: false}, action) {
   var newState = null;
   switch (action.type) {
     case FETCH_SUMMARY:
-      return {...state, fetch_payroll: false, data: action.payload.data }
+      return {...state,
+              fetch_payroll: false,
+              manageCourse: false,
+              data: action.payload.data
+             }
     case FETCH_INSTRUCTOR_PAYROLL:
       return {...state,
               fetch_payroll: true,
+              manageCourse: false,
               data: action.payload.data,
               code: action.payload.data.instructor.code }
     case SEND_INSTRUCTOR_PAYROLL:
@@ -95,6 +104,53 @@ export default function(state = {startDate: null, endDate: null, name: '', adjus
             _.remove(newState.data.instructor.payrollDetails, (record) => {
               return record._id === recordToRemove._id;
             });
+          }
+          return newState;
+        }
+      }
+      break;
+    case FETCH_COURSE:
+      return {...state, manageCourse: true, courseData: action.payload.data};
+    case ADD_NEW_COURSE:
+      newState = _.cloneDeep(state);
+      if (action.payload) {
+        if (action.payload.data) {
+          if (newState) {
+            const newCourse = action.payload.data.savedCourse;
+            newState.courseData.courses.push(newCourse);
+          }
+        }
+      }
+      return newState;
+    case UPDATE_COURSE:
+      newState = _.cloneDeep(state);
+      if (action.payload) {
+        if (action.payload.data) {
+          if (newState) {
+            var courseUpdated = action.payload.data.courseUpdated;
+            newState.courseData.courses.forEach((course, index) => {
+              if (course._id === courseUpdated._id) {
+                course.name = courseUpdated.name;
+                course.description = courseUpdated.description;
+              }
+            });
+          }
+        }
+      }
+      return newState;
+    case REMOVE_COURSE:
+      if (action.payload.data) {
+        if (action.payload.data.foundCourse) {
+          newState = _.cloneDeep(state);
+          if (newState) {
+            const courseToRemove = action.payload.data.foundCourse;
+            var newCourses = [];
+            newState.courseData.courses.forEach((course, index) => {
+              if (course._id !== courseToRemove._id) {
+                newCourses.push(course);
+              }
+            });
+            newState.courseData.courses = newCourses;
           }
           return newState;
         }

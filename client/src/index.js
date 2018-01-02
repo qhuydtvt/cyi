@@ -18,6 +18,7 @@ import './style/login.css';
 import './style/style.css';
 import './style/instructorForm.css';
 import './style/summary.css';
+import './style/course.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 

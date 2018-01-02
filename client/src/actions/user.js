@@ -6,7 +6,7 @@ export const LOG_OUT = "log out";
 export const FETCH_CURRENT_USER = "FETCH_CURRENT_USER";
 export const FETCH_USER_CHECKIN_SUMMARY = "fetch user checkin summary";
 
-const ROOT_API = "https://checkyouin-api.herokuapp.com/api/";
+const ROOT_API = "https://chamcong-api.herokuapp.com/api/";
 
 const LOGIN_API = `${ROOT_API}login`;
 const CHANGE_PASSWORD_API = `${ROOT_API}change-password`;

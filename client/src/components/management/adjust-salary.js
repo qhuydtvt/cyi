@@ -199,7 +199,8 @@ function validate(values) {
   return errors;
 }
 
-const tempComponent = connect(mapStateToProps, { fetchSummary, adjustSalary, fetchInstructorPayroll })(AdjustSalary);
+const tempComponent = connect(mapStateToProps,
+  { fetchSummary, adjustSalary, fetchInstructorPayroll })(AdjustSalary);
 
 export default reduxForm({
   validate,
