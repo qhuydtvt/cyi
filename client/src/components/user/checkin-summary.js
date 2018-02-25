@@ -7,7 +7,7 @@ import Flatpickr from 'react-flatpickr';
 
 import { fetchUserCheckinSummary } from './../../actions';
 
-import User from './../user';
+import User from '../helpers/user';
 
 import _ from 'lodash';
 import moment from 'moment';

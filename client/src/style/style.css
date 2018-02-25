@@ -60,7 +60,7 @@ a {
 
 .instructor img {
   object-fit: cover;
-  height: auto !important;
+  height: 200px;
 }
 
 .instructor .card {

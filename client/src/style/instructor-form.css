@@ -1,0 +1,20 @@
+
+.submit-instructor-form form .fa{
+  font-size: 26px;
+  margin-left: 20px;
+}
+
+.submit-instructor-form .calendar {
+  position: relative;
+}
+
+.submit-instructor-form .calendar i {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  pointer-events: none;
+}
+
+.submit-instructor-form .calendar i:hover {
+  cursor: pointer;
+}

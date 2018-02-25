@@ -2,16 +2,23 @@ import { combineReducers } from 'redux';
 
 import { reducer as formReducer } from 'redux-form';
 
-import InstructorReducer from './reducer_instructor_list';
-import InstructorRecordNewReducer from './reducer_instructor_record_new';
-import CourseNewReducer from './reducer_course';
-import ConfirmDialogReducer from './reducer_confirm_dialog';
-import LoginReducer from './reducer_credentials';
-import UserReducer from './reducer_user';
-import SearchBarReducer from './reducer_searchbar';
-import SummaryReducer from './reducer_summary';
+import InstructorReducer from './reducer-instructor-list';
+import InstructorRecordNewReducer from './reducer-instructor-record-new';
+import CourseNewReducer from './reducer-course';
+import InstructorManagementReducer from './reducer-instructor';
+import ConfirmDialogReducer from './reducer-confirm-dialog';
+import LoginReducer from './reducer-credentials';
+import UserReducer from './reducer-user';
+import SearchBarReducer from './reducer-searchbar';
+import SummaryReducer from './reducer-summary';
 
-import { HIDE_INSTRUCTOR_MODAL, HIDE_ADD_NEW_COURSE_MODAL } from '../actions';
+import { HIDE_INSTRUCTOR_MODAL,
+         HIDE_ADD_NEW_COURSE_MODAL,
+         SHOW_ADD_NEW_COURSE_MODAL,
+         SHOW_ADD_NEW_INSTRUCTOR_MODAL,
+         HIDE_ADD_NEW_INSTRUCTOR_MODAL } from '../actions';
+
+import { getInstructorNewModalDefaultState } from './helpers';
 
 const rootReducer = combineReducers({
   form: formReducer.plugin(
@@ -53,7 +60,36 @@ const rootReducer = combineReducers({
       }
     },
     addNewCourseForm: (state, action) => {
+
       switch (action.type) {
+        case SHOW_ADD_NEW_COURSE_MODAL:
+          if (action.payload) {
+            var course = action.payload;
+            return {...state,
+              values: {
+                courseName: course.name,
+                description: course.description
+              }
+            }
+          } else {
+            return {...state,
+              anyTouched: false,
+              fields :{
+                courseName: {
+                  touched: false,
+                  visited: false
+                },
+                description: {
+                  touched: false,
+                  visited: false
+                }
+              },
+              values: {
+                courseName: "",
+                description: ""
+              }
+            };
+          }
         case HIDE_ADD_NEW_COURSE_MODAL:
           return {...state,
             anyTouched: false,
@@ -72,13 +108,39 @@ const rootReducer = combineReducers({
               description: ""
             }
           };
-        default: return state;
+       default: return state;
+      }
+    },
+    addNewInstructorForm: (state, action) => {
+
+      switch (action.type) {
+        case SHOW_ADD_NEW_INSTRUCTOR_MODAL:
+          if (action.payload) {
+            var instructor = action.payload;
+            return {...state,
+              values: getInstructorNewModalDefaultState(instructor).values
+            }
+          } else {
+            return {...state,
+              anyTouched: false,
+              fields : getInstructorNewModalDefaultState(undefined).fields,
+              values: getInstructorNewModalDefaultState(undefined).values
+            };
+          }
+        case HIDE_ADD_NEW_INSTRUCTOR_MODAL:
+          return {...state,
+            anyTouched: false,
+            fields : getInstructorNewModalDefaultState(undefined).fields,
+            values: getInstructorNewModalDefaultState(undefined).values
+          };
+       default: return state;
       }
     }
   }),
   instructorList: InstructorReducer,
   instructorRecordNew: InstructorRecordNewReducer,
   courseNew: CourseNewReducer,
+  instructorManagement: InstructorManagementReducer,
   confirmDialog: ConfirmDialogReducer,
   loginCredentials: LoginReducer,
   user : UserReducer,

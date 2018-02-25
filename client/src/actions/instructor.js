@@ -1,82 +1,43 @@
 import axios from 'axios';
 
-export const FETCH_INSTRUCTORS = "fetch instructors";
-export const SEARCH_INSTRUCTORS = "search instructors";
+export const FETCH_INSTRUCTOR = 'fetch all instructor';
 
-export const SHOW_INSTRUCTOR_MODAL = "show instructor modal";
-export const HIDE_INSTRUCTOR_MODAL = "hide instructor modal";
+export const SHOW_ADD_NEW_INSTRUCTOR_MODAL = 'show add new instructor modal';
+export const HIDE_ADD_NEW_INSTRUCTOR_MODAL = 'hide add new instructor modal';
 
-export const ADD_INSTRUCTOR_RECORD = "successfully add instructor-record";
-export const REMOVE_INSTRUCTOR_RECORD = "remove instructor record";
+export const ADD_NEW_INSTRUCTOR = 'add new instructor';
+export const UPDATE_INSTRUCTOR = 'update instructor';
+export const REMOVE_INSTRUCTOR = 'remove instructor';
 
-export const SHOW_INSTRUCTOR_RECORD = "show instructor record";
-export const HIDE_INSTRUCTOR_RECORD = "hide instructor record";
+const INSTRUCTOR_API = "https://chamcong-api.herokuapp.com/api/instructor";
 
-///////////////////////////////////////////////////////////////////////
-const ROOT_API = "https://chamcong-api.herokuapp.com/api/";
+const ADD_NEW_INSTRUCTOR_API = INSTRUCTOR_API;
+const UPDATE_INSTRUCTOR_API = `${INSTRUCTOR_API}/update`;
+const REMOVE_INSTRUCTOR_API = INSTRUCTOR_API;
 
-const INSTRUCTOR_API = `${ROOT_API}instructors`;
-const INSTRUCTOR_SEARCH_API = `${ROOT_API}instructors?name=`;
-const INSTRUCTOR_RECORD_API = `${ROOT_API}instructor-records`;
-const INSTRUCTOR_REMOVE_API = `${ROOT_API}instructor-records/`;
-////////////////////////////////////////////////////////////////////////
-
-export function fetchInstructor() {
+export function fetchAllInstructor() {
   return {
-    type: FETCH_INSTRUCTORS,
-    payload: axios.get(INSTRUCTOR_API)
-  };
-}
-
-export function searchInstructor(keyword, finishSearchCallback) {
-  const searchInterceptor = function(response, err) {
-    return new Promise((resolve, reject) => {
-      if (err) {
-        reject();
-      } else {
-        finishSearchCallback();
-        resolve(response);
-      }
-    });
+    type: FETCH_INSTRUCTOR,
+    payload: axios.get(`${INSTRUCTOR_API}/all`)
   }
-
-  return {
-    type: SEARCH_INSTRUCTORS,
-    payload: axios.get(`${INSTRUCTOR_SEARCH_API}${keyword}`).then(searchInterceptor)
-  };
 }
 
-export function showAddInstructorModal(instructor) {
+export function showAddNewInstructorModal(instructor) {
   return {
-    type: SHOW_INSTRUCTOR_MODAL,
+    type: SHOW_ADD_NEW_INSTRUCTOR_MODAL,
     payload: instructor
-  };
+  }
 }
 
-export function hideAddIntructorModal() {
+export function hideAddNewInstructorModal() {
   return {
-    type: HIDE_INSTRUCTOR_MODAL,
+    type: HIDE_ADD_NEW_INSTRUCTOR_MODAL,
     payload: null
-  };
-}
-
-export function showInstructorRecord(instructor)  {
-  return {
-    type: SHOW_INSTRUCTOR_RECORD,
-    payload: instructor
   }
 }
 
-export function hideInstructorRecord(instructor) {
-  return {
-    type: HIDE_INSTRUCTOR_RECORD,
-    payload: instructor
-  };
-}
-
-export function addInstructorRecord(record, infoCallback, successCallback, errorCallback ) {
-  infoCallback();
-  const request = axios.post(INSTRUCTOR_RECORD_API, record)
+export function addNewInstructor(instructor, successCallback, errorCallback ) {
+  const request = axios.post(ADD_NEW_INSTRUCTOR_API, instructor)
     .catch((err) => {
       errorCallback();
     });
@@ -95,12 +56,37 @@ export function addInstructorRecord(record, infoCallback, successCallback, error
   };
 
   return {
-    type: ADD_INSTRUCTOR_RECORD,
+    type: ADD_NEW_INSTRUCTOR,
     payload: request.then(interceptor)
   };
 }
 
-export function removeInstructorRecord(record, deletedCallback) {
+export function updateInstructor(instructorId, instructor, successCallback, errorCallback ) {
+  const request = axios.post(`${UPDATE_INSTRUCTOR_API}/${instructorId}`, instructor)
+    .catch((err) => {
+      errorCallback();
+    });
+
+  const interceptor = function(response, error) {
+    return new Promise((resolve, reject) => {
+      if (!response.data || !response.data.success) {
+        errorCallback();
+        reject();
+      }
+      else {
+        successCallback();
+        resolve(response); // Pass response to next promise
+      }
+    });
+  };
+
+  return {
+    type: UPDATE_INSTRUCTOR,
+    payload: request.then(interceptor)
+  };
+}
+
+export function removeInstructor(instructor, deletedCallback) {
   const removeInterceptor = function(response, err) {
     return new Promise((resolve, reject) => {
       if (err || !response.data) {
@@ -111,9 +97,9 @@ export function removeInstructorRecord(record, deletedCallback) {
       }
     });
   };
-  var recordId = record._id;
+  var instructorId = instructor._id;
   return {
-    type: REMOVE_INSTRUCTOR_RECORD,
-    payload: axios.delete(`${INSTRUCTOR_REMOVE_API}${recordId}`).then(removeInterceptor)
+    type: REMOVE_INSTRUCTOR,
+    payload: axios.delete(`${REMOVE_INSTRUCTOR_API}/${instructorId}`).then(removeInterceptor)
   };
 }

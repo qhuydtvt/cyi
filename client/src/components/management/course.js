@@ -12,8 +12,8 @@ import { fetchCourse,
         removeCourse
       } from '../../actions';
 
-import User from '../user';
-import CourseNewModal from '../helpers/course_new_modal';
+import User from '../helpers/user';
+import CourseNewModal from '../helpers/course-new-modal';
 
 class Course extends Component {
 

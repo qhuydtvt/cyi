@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Login from './login';
-import Checkin from './checkin';
+import Login from './user/login';
+import Checkin from './checkin/checkin';
 import CheckinSummary from './user/checkin-summary';
-import Management from './management';
+import Management from './management/management';
 
 import { loadState, logout } from '../actions';
 

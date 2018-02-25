@@ -9,14 +9,15 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 
 import Main from './components/main';
-import ChangePassword from './components/change_password';
-import ConfirmDialog from './components/confirm_dialog';
+import ChangePassword from './components/user/change-password';
+import ConfirmDialog from './components/helpers/confirm-dialog';
 
 import reducers from './reducers';
 
 import './style/login.css';
 import './style/style.css';
-import './style/instructorForm.css';
+import './style/instructor-form.css';
+import './style/instructor-management.css';
 import './style/summary.css';
 import './style/course.css';
 

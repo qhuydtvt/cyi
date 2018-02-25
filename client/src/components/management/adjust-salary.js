@@ -7,7 +7,7 @@ import { Table } from 'reactstrap';
 import _ from 'lodash';
 import $ from 'jquery';
 
-import User from '../user';
+import User from '../helpers/user';
 
 import { fetchSummary, adjustSalary, fetchInstructorPayroll } from '../../actions';
 

@@ -14,7 +14,7 @@ import { sendPayroll,
          removeInstructorRecord
        } from '../../actions';
 
-import InstructorRecordNew from '../instructor_record_new';
+import InstructorRecordNew from '../checkin/instructor-record-new';
 
 class InstructorPayroll extends Component {
 
