@@ -63,12 +63,14 @@ class InstructorRecordNew extends Component{
     const instructor = this.props.instructorRecordNew.instructor;
     const instructorId = instructor._id;
 
-    var course = values.course.value.name;
+    // NOTE for rightnow!!! : update saving record's course by id not by name anymore
+    var course = values.course.value._id;
     var className = values.className;
 
     // reset class-name n course send to server
-    className = this.updateClassName(course, className);
-    course = this.updateCourse(course);
+    className = this.updateClassName(values.course.value.name, className);
+    // course = this.updateCourse(course);
+
 
     const role = values.role.value;
     const recordDate = values.recordDate;

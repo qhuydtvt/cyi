@@ -54,6 +54,7 @@ export default function(state = defaultState, action) {
             // add new-record to payroll-details table
             var newRecord = action.payload.data.results;
             var salary = action.payload.data.salary;
+
             newState.data.instructor.payrollDetails = _.concat(newState.data.instructor.payrollDetails,
                 newRecord);
 
