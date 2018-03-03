@@ -28,14 +28,14 @@ export default function(state = defaultState, action) {
   switch (action.type) {
     case FETCH_SUMMARY:
       return {...state,
-              fetch_payroll: false,
+              fetchPayroll: false,
               manageCourse: false,
               manageInstructor: false,
               data: action.payload.data
              }
     case FETCH_INSTRUCTOR_PAYROLL:
       return {...state,
-              fetch_payroll: true,
+              fetchPayroll: true,
               manageCourse: false,
               data: action.payload.data,
               code: action.payload.data.instructor.code }
@@ -122,7 +122,7 @@ export default function(state = defaultState, action) {
       }
       break;
     case FETCH_COURSE:
-      let manageCourse = state.manageInstructor ? false : true;
+      let manageCourse = state.manageInstructor || state.fetchPayroll ? false : true;
       return {...state, manageCourse: manageCourse, courseData: action.payload.data};
     case ADD_NEW_COURSE:
       newState = _.cloneDeep(state);

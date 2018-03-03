@@ -34,8 +34,7 @@ export function fetchSummary(startDate, endDate, name, finishSearchCallback) {
 }
 
 export function fetchInstructorPayroll(code, startDate, endDate) {
-  var REQUEST_SENT_TO_SERVER =
-      `${FETCH_INSTRUCTOR_PAYROLL_API}?code=${code}&startDate=${startDate}&endDate=${endDate}`
+  var REQUEST_SENT_TO_SERVER = `${FETCH_INSTRUCTOR_PAYROLL_API}?code=${code}&startDate=${startDate}&endDate=${endDate}`;
   return {
     type: FETCH_INSTRUCTOR_PAYROLL,
     payload: axios.get(REQUEST_SENT_TO_SERVER)

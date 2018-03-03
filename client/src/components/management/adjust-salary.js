@@ -89,7 +89,7 @@ class AdjustSalary extends Component {
         <td><div className="salary-content">{role}</div></td>
         <td className="text-right pr-5">
           <Field
-            name={`${salary.course}||${salary.role}`}
+            name={`${salary.course} || ${salary.role}`}
             salary={salary.salary / 1000}
             component = {this.renderInputField}
           />

@@ -52,7 +52,7 @@ class Management extends Component {
 
     this.setDateInProps(startDate + 'T00:00:00.000Z', endDate + 'T23:59:59.000Z');
 
-    if (!this.props.summary.fetch_payroll) {
+    if (!this.props.summary.fetchPayroll) {
       this.props.fetchSummary(this.props.summary.startDate,
                               this.props.summary.endDate,
                               this.props.summary.name
@@ -102,7 +102,7 @@ class Management extends Component {
 
     // check if summary-time is in paid-time duration
     if (summaryStartDate >= paidStartDate && summaryEndDate <= paidEndDate ) {
-      if (!this.props.summary.fetch_payroll) {
+      if (!this.props.summary.fetchPayroll) {
         return (
           <span className="text-success ml-4"
            title="Đã gửi bảng lương cho giảng viên">Đã gửi</span>
@@ -163,7 +163,7 @@ class Management extends Component {
   }
 
   renderSummaryData(summary) {
-    if (!summary.fetch_payroll) {
+    if (!summary.fetchPayroll) {
       return (
         this.renderSummaryTable(summary.data.payroll)
       );
@@ -177,6 +177,7 @@ class Management extends Component {
   render() {
     const { summary } = this.props;
     console.log(summary);
+
     // TODO, NOTE: findout and fix bug: code run in block else if (summary.data) without data
 
     if(summary.adjustSalary) {
@@ -204,7 +205,7 @@ class Management extends Component {
           <div className="container mt-3">
             <div className="row">
               {
-                !this.props.summary.fetch_payroll ? <SearchBar /> :
+                !this.props.summary.fetchPayroll ? <SearchBar /> :
                   <div className="row col-md-7 ml-1">
                     <button
                       className="btn btn-primary float-left mt-1"
