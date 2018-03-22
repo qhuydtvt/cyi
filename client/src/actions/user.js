@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ROOT_URL, API_URL} from './urls'
 
 export const LOGIN = "login to checkin";
 export const CHANGE_PASSWORD = "change users password";
@@ -6,12 +7,10 @@ export const LOG_OUT = "log out";
 export const FETCH_CURRENT_USER = "FETCH_CURRENT_USER";
 export const FETCH_USER_CHECKIN_SUMMARY = "fetch user checkin summary";
 
-const ROOT_API = "https://chamcong-api.herokuapp.com/api/";
-
-const LOGIN_API = `${ROOT_API}login`;
-const CHANGE_PASSWORD_API = `${ROOT_API}change-password`;
-const USER_API = `${ROOT_API}user`;
-const FETCH_USER_CHECKIN_SUMMRY_API = `${ROOT_API}user/checkin-summary`
+const LOGIN_API = `${API_URL}/login`;
+const CHANGE_PASSWORD_API = `${API_URL}/change-password`;
+const USER_API = `${API_URL}/user`;
+const FETCH_USER_CHECKIN_SUMMRY_API = `${API_URL}/user/checkin-summary`
 
 function saveLoggedInState(user, token) {
   axios.defaults.headers.common["x-access-token"] = token;

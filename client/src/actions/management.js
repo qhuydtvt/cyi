@@ -1,16 +1,20 @@
 import axios from 'axios';
+import {ROOT_URL, API_URL} from './urls';
 
 export const FETCH_SUMMARY = "fetch summary";
 export const FETCH_INSTRUCTOR_PAYROLL = "fetch instructor payroll";
 export const SEND_INSTRUCTOR_PAYROLL = 'send instructor payroll';
+
 export const FETCH_INSTRUCTOR_SALARY = 'fetch salary';
-export const ADJUST_INSTRUCTOR_SALARY = 'adjust salary';
+export const UPDATE_INSTRUCTOR_SALARY = 'update instructor salary';
 
-const MANAGEMENT_API = "https://chamcong-api.herokuapp.com/api/management/";
+const MANAGEMENT_API = `${API_URL}/management/`;
 
-const FETCH_SUMMARY_API = `${MANAGEMENT_API}summary`
-const FETCH_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll`
-const INSTRUCTOR_SALARY_API = `${MANAGEMENT_API}payroll/adjust`
+const FETCH_SUMMARY_API = `${MANAGEMENT_API}summary`;
+const FETCH_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll`;
+
+const INSTRUCTOR_SALARY_API = `${MANAGEMENT_API}salary`;
+
 const SEND_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll/send`;
 
 export function fetchSummary(startDate, endDate, name, finishSearchCallback) {
@@ -64,7 +68,7 @@ export function sendPayroll(code, startDate, endDate, errorCallback, successCall
   };
 }
 
-export function adjustSalary(code, salaries, errorCallback, successCallback) {
+export function updateSalary(code, salaries, errorCallback, successCallback) {
   var interceptor = (response, err) => {
     return new Promise((resolve, reject) => {
       if (!response.data || !response.data.success) {
@@ -77,8 +81,8 @@ export function adjustSalary(code, salaries, errorCallback, successCallback) {
     })
   }
   return {
-    type: ADJUST_INSTRUCTOR_SALARY,
-    payload: axios.post(`${INSTRUCTOR_SALARY_API}?code=${code}`, {salaries}).then(interceptor)
+    type: UPDATE_INSTRUCTOR_SALARY,
+    payload: axios.post(`${INSTRUCTOR_SALARY_API}/update?code=${code}`, {salaries}).then(interceptor)
   }
 }
 

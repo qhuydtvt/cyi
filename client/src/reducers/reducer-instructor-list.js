@@ -52,7 +52,7 @@ export default function (state = null, action) {
       if (action.payload.data) {
         if (action.payload.data.foundRecord) {
           newState = _.cloneDeep(state);
-          if (newState) {
+          if (newState && !newState.fetchInstructorPayroll) {
             const recordToRemove = action.payload.data.foundRecord;
             const instructorId = recordToRemove.instructor;
             const instructorRecordId = recordToRemove._id;

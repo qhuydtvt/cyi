@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ROOT_URL, API_URL} from './urls';
 
 export const FETCH_COURSE = 'fetch all course';
 
@@ -9,11 +10,11 @@ export const ADD_NEW_COURSE = 'add new course';
 export const UPDATE_COURSE = 'update course';
 export const REMOVE_COURSE = 'remove course';
 
-const COURSE_API = "https://chamcong-api.herokuapp.com/api/course/";
+const COURSE_API = `${API_URL}/course`;
 
-const ADD_NEW_COURSE_API = "https://chamcong-api.herokuapp.com/api/course/create";
-const UPDATE_COURSE_API = "https://chamcong-api.herokuapp.com/api/course/update";
-const REMOVE_COURSE_API = "https://chamcong-api.herokuapp.com/api/course/delete/";
+const ADD_NEW_COURSE_API = `${COURSE_API}/create`;
+const UPDATE_COURSE_API = `${COURSE_API}/update`;
+const REMOVE_COURSE_API = `${COURSE_API}/delete`;
 
 export function fetchCourse() {
   return {

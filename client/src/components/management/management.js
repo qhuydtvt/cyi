@@ -18,7 +18,7 @@ import { fetchSummary,
 
 import SearchBar from '../helpers/search-bar';
 import User from '../helpers/user';
-import AdjustSalary from './adjust-salary';
+import InstructorSalary from './instructor-salary';
 import InstructorPayroll from './instructor-payroll';
 import ManageCourse from './course';
 import ManageInstructor from './instructor';
@@ -52,7 +52,7 @@ class Management extends Component {
 
     this.setDateInProps(startDate + 'T00:00:00.000Z', endDate + 'T23:59:59.000Z');
 
-    if (!this.props.summary.fetchPayroll) {
+    if (!this.props.summary.fetchInstructorPayroll) {
       this.props.fetchSummary(this.props.summary.startDate,
                               this.props.summary.endDate,
                               this.props.summary.name
@@ -102,7 +102,7 @@ class Management extends Component {
 
     // check if summary-time is in paid-time duration
     if (summaryStartDate >= paidStartDate && summaryEndDate <= paidEndDate ) {
-      if (!this.props.summary.fetchPayroll) {
+      if (!this.props.summary.fetchInstructorPayroll) {
         return (
           <span className="text-success ml-4"
            title="Đã gửi bảng lương cho giảng viên">Đã gửi</span>
@@ -163,7 +163,7 @@ class Management extends Component {
   }
 
   renderSummaryData(summary) {
-    if (!summary.fetchPayroll) {
+    if (!summary.fetchInstructorPayroll) {
       return (
         this.renderSummaryTable(summary.data.payroll)
       );
@@ -180,9 +180,9 @@ class Management extends Component {
 
     // TODO, NOTE: findout and fix bug: code run in block else if (summary.data) without data
 
-    if(summary.adjustSalary) {
+    if(summary.fetchInstructorSalary) {
       return (
-        <AdjustSalary />
+        <InstructorSalary />
       )
     }
     else if(summary.manageCourse) {
@@ -205,7 +205,7 @@ class Management extends Component {
           <div className="container mt-3">
             <div className="row">
               {
-                !this.props.summary.fetchPayroll ? <SearchBar /> :
+                !this.props.summary.fetchInstructorPayroll ? <SearchBar /> :
                   <div className="row col-md-7 ml-1">
                     <button
                       className="btn btn-primary float-left mt-1"

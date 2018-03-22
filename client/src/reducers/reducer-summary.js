@@ -1,7 +1,7 @@
 import { FETCH_SUMMARY,
         FETCH_INSTRUCTOR_PAYROLL,
         FETCH_INSTRUCTOR_SALARY,
-        ADJUST_INSTRUCTOR_SALARY,
+        UPDATE_INSTRUCTOR_SALARY,
         REMOVE_INSTRUCTOR_RECORD,
         SEND_INSTRUCTOR_PAYROLL,
         ADD_INSTRUCTOR_RECORD,
@@ -18,7 +18,7 @@ var defaultState = {
   startDate: null,
   endDate: null,
   name: '',
-  adjustSalary: false,
+  fetchInstructorSalary: false,
   manageCourse: false,
   manageInstructor: false
 }
@@ -28,22 +28,22 @@ export default function(state = defaultState, action) {
   switch (action.type) {
     case FETCH_SUMMARY:
       return {...state,
-              fetchPayroll: false,
+              fetchInstructorPayroll: false,
               manageCourse: false,
               manageInstructor: false,
               data: action.payload.data
              }
     case FETCH_INSTRUCTOR_PAYROLL:
       return {...state,
-              fetchPayroll: true,
+              fetchInstructorPayroll: true,
               manageCourse: false,
               data: action.payload.data,
               code: action.payload.data.instructor.code }
     case SEND_INSTRUCTOR_PAYROLL:
       return {...state, results: action.payload}
     case FETCH_INSTRUCTOR_SALARY:
-      return {...state, adjustSalary: true, data: action.payload.data}
-    case ADJUST_INSTRUCTOR_SALARY:
+      return {...state, fetchInstructorSalary: true, data: action.payload.data}
+    case UPDATE_INSTRUCTOR_SALARY:
       return {...state, results: action.payload.data}
     case ADD_INSTRUCTOR_RECORD:
       newState = _.cloneDeep(state);
@@ -122,7 +122,7 @@ export default function(state = defaultState, action) {
       }
       break;
     case FETCH_COURSE:
-      let manageCourse = state.manageInstructor || state.fetchPayroll ? false : true;
+      let manageCourse = state.manageInstructor || state.fetchInstructorPayroll ? false : true;
       return {...state, manageCourse: manageCourse, courseData: action.payload.data};
     case ADD_NEW_COURSE:
       newState = _.cloneDeep(state);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ROOT_URL, API_URL} from './urls';
 
 export const FETCH_INSTRUCTOR = 'fetch all instructor';
 
@@ -9,7 +10,7 @@ export const ADD_NEW_INSTRUCTOR = 'add new instructor';
 export const UPDATE_INSTRUCTOR = 'update instructor';
 export const REMOVE_INSTRUCTOR = 'remove instructor';
 
-const INSTRUCTOR_API = "https://chamcong-api.herokuapp.com/api/instructor";
+const INSTRUCTOR_API = `${API_URL}/instructor`;
 
 const ADD_NEW_INSTRUCTOR_API = INSTRUCTOR_API;
 const UPDATE_INSTRUCTOR_API = `${INSTRUCTOR_API}/update`;

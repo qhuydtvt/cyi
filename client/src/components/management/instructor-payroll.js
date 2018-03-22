@@ -98,7 +98,7 @@ class InstructorPayroll extends Component {
 
     // check if summary-time is in paid-time duration
       if (summaryStartDate >= paidStartDate && summaryEndDate <= paidEndDate ) {
-        if (!this.props.summary.fetchPayroll) {
+        if (!this.props.summary.fetchInstructorPayroll) {
           return (
             <span className="text-success ml-4"
              title="Đã gửi bảng lương cho giảng viên">Đã gửi</span>

@@ -105,13 +105,36 @@ class InstructorRecordNew extends Component{
     const { handleSubmit } = this.props;
     let courseOptions = !_.isEmpty(instructor.courses) ? instructor.courses : this.props.instructorRecordNew.allCourses;
 
+    // check if courseOptions contain course-ids or course-objects
+    // if contain course-ids => query in this.props.instructorRecordNew.allCourses to get all course-objects
+
+    let updatedCourseOptions = [];
+
+    _.forEach(courseOptions, (course) => {
+      if (typeof(course) === "string") {
+        _.forEach(this.props.instructorRecordNew.allCourses, (courseObject) => {
+          if (courseObject._id === course) {
+            updatedCourseOptions.push({
+              'value': courseObject,
+              'label': courseObject.name
+            });
+          }
+        });
+      } else {
+        updatedCourseOptions.push({
+          'value': course,
+          'label': course.name
+        });
+      }
+    });
+
     return (
       <div>
         <Form className="submit-instructor-form" onSubmit={handleSubmit(this.onSubmit)}>
           <Field
             name="course"
             label="Khóa học"
-            courseOptions={courseOptions}
+            courseOptions={updatedCourseOptions}
             component = {this.renderSelectCourseField}
           />
           <Field
@@ -197,20 +220,11 @@ class InstructorRecordNew extends Component{
   renderSelectCourseField(field) {
     const {meta: {touched, error}} = field;
 
-    let courseOptions = [];
-
-    _.forEach(field.courseOptions, (course) => {
-      courseOptions.push({
-        'value': course,
-        'label': course.name
-      });
-    });
-
     return (
       <FormGroup>
         <label className="h5">{field.label}</label>
         <Select
-          options = {courseOptions}
+          options = {field.courseOptions}
           {...field.input} onBlur = {() => field.input.onBlur(field.value)}
         />
         <div className="form-text text-danger">
