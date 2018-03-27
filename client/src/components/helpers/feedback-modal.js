@@ -13,7 +13,7 @@ import { NotificationManager } from 'react-notifications';
 
 import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup, Button } from 'reactstrap';
 
-import { hideFeedbackForm, fetchDepartments, sendFeedback } from '../../actions';
+import { hideFeedbackForm, fetchDepartments, sendFeedback, enableFeedbackSubmit, disableFeedbackSubmit } from '../../actions';
 
 class FeedbackModal extends Component {
   constructor(props) {
@@ -80,9 +80,12 @@ class FeedbackModal extends Component {
     
     const successCallback = () => {
       NotificationManager.success('Feedback của bạn đã được gửi đi');
+      this.props.enableFeedbackSubmit();
+      this.props.hideFeedbackForm();
     };
 
     const errorCallback = () => {
+      this.props.enableFeedbackSubmit();
       NotificationManager.error('Lỗi kết nối !');
     };
 
@@ -90,6 +93,7 @@ class FeedbackModal extends Component {
       return deparment.value._id;
     });
     
+    this.props.disableFeedbackSubmit();
     this.props.sendFeedback(departmentIds, content, progressCallback, successCallback, errorCallback);
   }
 
@@ -99,6 +103,8 @@ class FeedbackModal extends Component {
     });
     
     const { handleSubmit } = this.props;
+
+    const disabledString = this.props.feedbackModal.submitEnabled ? '' : 'disabled';
 
     return (
       <div>
@@ -118,7 +124,10 @@ class FeedbackModal extends Component {
             >
           </Field>
           <div className="mt-3 float-right">
-            <Button type="submit" color="primary">Gửi</Button>
+            {this.props.feedbackModal.submitEnabled ?
+              <Button type="submit" color="primary">Gửi</Button> :
+              <Button type="submit" color="primary" disabled>Gửi</Button>
+            }
           </div>
         </Form>
       </div>
@@ -165,5 +174,5 @@ function mapStateToProps({ feedbackModal, department }) {
 export default reduxForm({validate,
   form: "feedbackForm"
 })(
-  connect(mapStateToProps, {hideFeedbackForm, fetchDepartments, sendFeedback}) (FeedbackModal)
+  connect(mapStateToProps, {hideFeedbackForm, fetchDepartments, sendFeedback, enableFeedbackSubmit, disableFeedbackSubmit}) (FeedbackModal)
 );

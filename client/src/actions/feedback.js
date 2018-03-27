@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FEEDBACK_API_URL } from './urls';
 
-export const SEND_FEEDBACK = "Send feedback"
+export const SEND_FEEDBACK = "Send feedback";
 
 export function sendFeedback(departmentIds, content, progressCallback, successCallback, errorCallback) {
     const body = {
