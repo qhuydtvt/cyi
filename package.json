@@ -1,17 +1,37 @@
 {
-  "name": "rando",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "engines": {
-    "node": "6.11.1"
-  },
+  "name": "chamcong-webapp",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "express": "^4.15.3",
-    "password-generator": "^2.1.0"
+    "axios": "^0.16.2",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "node-gyp": "^3.6.2",
+    "react": "^15.6.1",
+    "react-cropper": "^1.0.1",
+    "react-dom": "^15.6.1",
+    "react-dropzone": "^4.2.8",
+    "react-file-base64": "^1.0.3",
+    "react-flatpickr": "^3.5.0",
+    "react-image-crop": "^3.0.10",
+    "react-loading": "^0.1.4",
+    "react-modal": "^2.2.2",
+    "react-native-simple-radio-button": "^2.6.1",
+    "react-notifications": "^1.4.3",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "react-scripts": "1.0.10",
+    "react-select": "^1.0.0-rc.5",
+    "reactstrap": "^4.8.0",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.0",
+    "redux-promise": "^0.5.3"
   },
   "scripts": {
-    "start": "node index.js",
-    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }

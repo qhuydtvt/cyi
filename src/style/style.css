@@ -1,0 +1,99 @@
+html,body {
+   font-family: 'Roboto', sans-serif !important;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+#user-info button {
+  margin: 4.5px 0px;
+}
+
+#check-in {
+  margin: 20px auto;
+}
+
+#search-bar input {
+  position: relative;
+  height: 47px;
+  padding: 9px;
+}
+
+#user-info span {
+  line-height: 47px;
+}
+
+#search-bar #search-loading {
+  position: absolute;
+  left: 81%;
+  height: 100%;
+  color: #b5b4b4;
+}
+
+#search-loading div {
+  width: unset !important;
+  height: 100% !important;
+}
+
+#search-loading svg {
+  width: 30px;
+  height: 30px;
+  margin-top: 7px;
+}
+
+.instructor {
+  float: left;
+  padding: 1vw;
+  position: relative;
+  height: 379px;
+}
+
+.instructor .btn:hover {
+  cursor: pointer;
+}
+
+.instructor img {
+  object-fit: cover;
+  height: 200px;
+}
+
+.instructor .card {
+  height: 100%;
+}
+
+.instructor .card-title {
+  width: 107%;
+}
+
+.instructor table a:hover {
+  cursor: pointer;
+}
+
+.instructor .instructorName {
+  margin: 20px 0px 20px 1vw;
+  font-weight: bold;
+}
+
+.instructor .bottom {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+}
+
+.delete-record {
+  font-size: 20px;
+  color: #ca1717;
+  border: none;
+  background: none;
+}
+
+.instructor a {
+  padding-right: 0px;
+}
