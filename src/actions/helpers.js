@@ -12,9 +12,6 @@ export const HIDE_FEEDBACK_FORM = "Hide feedback form";
 export const SHOW_SEARCH_LOADING = "show searching instructor loading";
 export const HIDE_SEARCH_LOADING = "hide searching instructor loading"
 
-export const ENABLE_FEEDBACK_SUBMIT = "Enable feedback submit";
-export const DISABLE_FEEDBACK_SUBMIT = "Disable feedback submit";
-
 export const LOAD_STATE = "load token";
 
 export const TOGGLE_ACCOUNT_DROPDOWN = "Toggle acount dropdown";
@@ -106,16 +103,4 @@ export function hideFeedbackForm() {
   return {
     type: HIDE_FEEDBACK_FORM
   }
-}
-
-export function enableFeedbackSubmit() {
-  return  {
-    type: ENABLE_FEEDBACK_SUBMIT
-  };
-}
-
-export function disableFeedbackSubmit() {
-  return {
-    type: DISABLE_FEEDBACK_SUBMIT
-  };
 }

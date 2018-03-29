@@ -1,0 +1,18 @@
+.instructor-course {
+  width: 300px;
+}
+
+/* customize: https://codepen.io/wbeeftink/pen/dIaDH */
+.course-tag {
+  background: #e5dada;
+  border-radius: 3px 0 0 3px;
+  color: #787373;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}

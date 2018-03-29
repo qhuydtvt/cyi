@@ -1,0 +1,47 @@
+.time-area {
+  margin: 50px 0px;
+}
+
+.time-area span {
+  line-height: 2.25;
+  margin-bottom: unset;
+}
+
+.instructor-summary:hover {
+  color: green;
+  cursor: pointer;
+}
+
+.summary-time {
+  width: auto;
+}
+
+.instructor-infos span {
+  line-height: 38px;
+}
+
+.payroll-total-class {
+  padding-left: 1.5rem !important;
+}
+
+#payroll-status {
+  vertical-align: unset !important;
+}
+
+.instructor-salary {
+  margin-bottom: unset !important;
+}
+
+.instructor-salary input {
+  width: unset !important;
+  display: unset !important;
+}
+
+.salary-content {
+  height: 38px;
+  line-height: 38px;
+}
+
+.salary-noti {
+  padding-right: 230px;
+}
