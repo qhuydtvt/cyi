@@ -28,8 +28,8 @@ class SearchBar extends Component {
     searchName = searchName.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
     searchName = searchName.replace(/đ/g,"d");
     searchName = searchName.replace(/!|@|\$|%|\^|\*|∣|\+|=|<|>|\?|\/|,|\.|:|'|"|&|#|\[|\]|~/g,"-");
-    searchName = searchName.replace(/-+-/g,"-"); //thay thế 2- thành 1-
-    searchName = searchName.replace(/^-+|-+$/g,"");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+    searchName = searchName.replace(/-+-/g,"-");  // replace -- by -
+    searchName = searchName.replace(/^-+|-+$/g,""); // cut - at the begin&end of string
     return searchName;
   }
 
@@ -70,7 +70,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div id="search-bar" className="row col-md-7 ml-2">
+      <div id="search-bar" className="row px-0 col-md-7 ml-1">
         <input placeholder="Nhập tên giảng viên" type="text" className="col-md-11"
          onChange={event => this.handleSearch(event.target.value)}></input>
          {this.renderSearchIcon()}
@@ -83,9 +83,9 @@ function mapStateToProps({ searchBar, summary }) {
   return { searchBar, summary };
 }
 
-export default connect(mapStateToProps, {
-                                          searchInstructor,
+export default connect(mapStateToProps, { searchInstructor,
                                           showSearchLoading,
                                           hideSearchLoading,
-                                          fetchSummary }
+                                          fetchSummary 
+                                        }
                                         )(SearchBar);

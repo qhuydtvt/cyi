@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from './urls';
+import { API_URL } from './urls';
 
 const MANAGEMENT_API = `${API_URL}/management`;
 const DEPARMENT_API = `${MANAGEMENT_API}/department`;

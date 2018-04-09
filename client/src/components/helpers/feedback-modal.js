@@ -104,7 +104,7 @@ class FeedbackModal extends Component {
     
     const { handleSubmit } = this.props;
 
-    const disabledString = this.props.feedbackModal.submitEnabled ? '' : 'disabled';
+    // const disabledString = this.props.feedbackModal.submitEnabled ? '' : 'disabled';
 
     return (
       <div>

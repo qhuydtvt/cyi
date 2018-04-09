@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from './urls';
+import { API_URL } from './urls';
 
 export const FETCH_COURSE = 'fetch all course';
 
@@ -101,6 +101,6 @@ export function removeCourse(course, deletedCallback) {
   var courseId = course._id;
   return {
     type: REMOVE_COURSE,
-    payload: axios.delete(`${REMOVE_COURSE_API}${courseId}`).then(removeInterceptor)
+    payload: axios.delete(`${REMOVE_COURSE_API}/${courseId}`).then(removeInterceptor)
   };
 }

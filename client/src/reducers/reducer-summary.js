@@ -1,4 +1,5 @@
-import { FETCH_SUMMARY,
+import { MANAGE_COURSE,
+        FETCH_SUMMARY,
         FETCH_INSTRUCTOR_PAYROLL,
         FETCH_INSTRUCTOR_SALARY,
         UPDATE_INSTRUCTOR_SALARY,
@@ -9,7 +10,8 @@ import { FETCH_SUMMARY,
         ADD_NEW_COURSE,
         UPDATE_COURSE,
         REMOVE_COURSE,
-        FETCH_INSTRUCTOR
+        FETCH_INSTRUCTOR,
+        ADD_NEW_INSTRUCTOR_SALARY
       } from '../actions';
 
 import _ from 'lodash';
@@ -23,12 +25,13 @@ var defaultState = {
   manageInstructor: false
 }
 
-export default function(state = defaultState, action) {
+export default function(state=defaultState, action) {
   var newState = null;
   switch (action.type) {
     case FETCH_SUMMARY:
       return {...state,
               fetchInstructorPayroll: false,
+              fetchInstructorSalary: false,
               manageCourse: false,
               manageInstructor: false,
               data: action.payload.data
@@ -123,6 +126,7 @@ export default function(state = defaultState, action) {
       break;
     case FETCH_COURSE:
       let manageCourse = state.manageInstructor || state.fetchInstructorPayroll ? false : true;
+      
       return {...state, manageCourse: manageCourse, courseData: action.payload.data};
     case ADD_NEW_COURSE:
       newState = _.cloneDeep(state);
@@ -170,7 +174,29 @@ export default function(state = defaultState, action) {
       }
       break;
     case FETCH_INSTRUCTOR:
-      return {...state, manageInstructor: true, instructorData: action.payload.data};
+      return {...state, 
+              manageInstructor: true, 
+              manageCourse: false,
+              fetchInstructorPayroll: false,
+              fetchInstructorSalary: false,
+              instructorData: action.payload.data};
+    case MANAGE_COURSE:
+        return {...state,
+          manageInstructor: false,
+          fetchInstructorPayroll: false,
+          fetchInstructorSalary: false,
+          manageCourse: true,
+          courseData: action.payload.data
+        }
+    case ADD_NEW_INSTRUCTOR_SALARY:
+      newState = _.cloneDeep(state);
+      var savedSalary = action.payload.data.savedSalary;
+      
+      var instructor = newState.data.instructor;
+      instructor.salaries.push(savedSalary);
+      newState.data.instructor = instructor;
+
+      return newState;
     default:
       return state;
   }

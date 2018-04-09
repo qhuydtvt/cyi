@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from './urls';
+import { API_URL } from './urls';
 
 export const FETCH_INSTRUCTORS = "fetch instructors";
 export const SEARCH_INSTRUCTORS = "search instructors";

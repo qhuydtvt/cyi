@@ -13,7 +13,8 @@ import { fetchSummary,
         sendPayroll,
         fetchInstructorSalary,
         fetchCourse,
-        fetchAllInstructor
+        fetchAllInstructor,
+        manageCourse
       } from '../../actions';
 
 import SearchBar from '../helpers/search-bar';
@@ -80,7 +81,7 @@ class Management extends Component {
     // if u dont slice, the fucking Flatpickr will render 2017-10-01 !
 
     return (
-      <div className="d-flex display-content-center time-area">
+      <div className="d-flex display-content-center mt-5 pl-2 time-area">
         <span className="h6">Bảng lương từ ngày: </span>
         <Flatpickr options={{defaultDate: startDate}}
               className="form-control summary-time ml-2 mr-3"
@@ -176,9 +177,8 @@ class Management extends Component {
 
   render() {
     const { summary } = this.props;
-    console.log(summary);
-
-    // TODO, NOTE: findout and fix bug: code run in block else if (summary.data) without data
+    
+    // TODO + NOTE: findout and fix bug: code run in block else if (summary.data) without data
 
     if(summary.fetchInstructorSalary) {
       return (
@@ -201,34 +201,33 @@ class Management extends Component {
           <div>Loading....</div>
         )
       } else {
+        var summaryButtonClass = summary.fetchInstructorPayroll ? "btn btn-secondary" : "btn";
+        summaryButtonClass += " float-left btn__height--primary mt-1";
         return (
           <div className="container mt-3">
-            <div className="row">
-              {
-                !this.props.summary.fetchInstructorPayroll ? <SearchBar /> :
-                  <div className="row col-md-7 ml-1">
-                    <button
-                      className="btn btn-primary float-left mt-1"
-                      style={{height: 38 + 'px'}}
-                      onClick={event => this.props.fetchSummary(this.props.summary.startDate,
-                                          this.props.summary.endDate, '')}
-                    >
-                      <i className="fa fa-arrow-left mr-3"></i>Danh sách lương
-                    </button>
-                  </div>
-              }
-              <User />
-            </div>
-            <div className='my-3 float-right'>
-              <button className='btn btn-primary mr-3' onClick={event => this.props.fetchAllInstructor()}>
+            <div className="row px-3">
+              <button
+                className={summaryButtonClass}
+                onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
+              >
+                <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
+              </button>
+              
+              <button className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
                 <i className='fa fa-users mr-3'></i>Quản lý giảng viên
               </button>
-              <button className='btn btn-primary' onClick={event => this.props.fetchCourse()}>
+              <button className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
                 <i className='fa fa-book mr-3'></i>Quản lý khóa học
               </button>
+              <User />
             </div>
-            <br/>
+            <hr/>
+
             {this.renderTime(summary.data.summaryTime)}
+            <div className='my-4'>
+              { !this.props.summary.fetchInstructorPayroll ? <SearchBar /> : <div></div> }
+            </div>
+
             {summary.data.payroll.length ? this.renderSummaryData(summary) : <h4>Không tìm thấy thông tin</h4>}
           </div>
         )
@@ -259,6 +258,7 @@ export default connect(mapStateToProps,
                           sendPayroll,
                           fetchInstructorSalary,
                           fetchCourse,
-                          fetchAllInstructor
+                          fetchAllInstructor,
+                          manageCourse
                         }
                      )(Management);

@@ -4,6 +4,7 @@
 
 /* customize: https://codepen.io/wbeeftink/pen/dIaDH */
 .course-tag {
+  overflow: auto;
   background: #e5dada;
   border-radius: 3px 0 0 3px;
   color: #787373;

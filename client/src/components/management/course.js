@@ -4,12 +4,14 @@ import { Table } from 'reactstrap';
 
 import _ from 'lodash';
 
-import { fetchCourse,
+import { fetchAllInstructor,
+        fetchCourse,
         fetchSummary,
         showAddNewCourseModal,
         showConfirmDialog,
         hideConfirmDialog,
-        removeCourse
+        removeCourse,
+        manageCourse
       } from '../../actions';
 
 import User from '../helpers/user';
@@ -93,19 +95,23 @@ class Course extends Component {
     return (
       <div className="container my-3">
         <CourseNewModal />
-        <div className="row">
-          <div className="row col-md-7 ml-1">
-            <button
-              className="btn btn-primary float-left mt-1"
-              style={{height: 38 + 'px'}}
-              onClick={event => this.props.fetchSummary(this.props.summary.startDate,
-                                  this.props.summary.endDate, '')}
-            >
-              <i className="fa fa-arrow-left mr-3"></i>Danh sách lương
-            </button>
-          </div>
+        <div className="row px-3">
+          <button
+            className="btn btn-secondary float-left btn__height--primary mt-1"
+            onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
+          >
+            <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
+          </button>
+          <button className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
+            <i className='fa fa-users mr-3'></i>Quản lý giảng viên
+          </button>
+          <button className='btn btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
+            <i className='fa fa-book mr-3'></i>Quản lý khóa học
+          </button>
           <User />
         </div>
+        <hr/>
+        
         <div className="my-5">
           <span className='h4 my-5'>Danh sách khóa học</span>
           <button className='btn btn-success float-right'
@@ -130,10 +136,12 @@ function mapStateToProps({ summary }) {
   return { summary };
 }
 
-export default connect(mapStateToProps, { fetchCourse,
+export default connect(mapStateToProps, { fetchAllInstructor,
+                                          fetchCourse,
                                           fetchSummary,
                                           showAddNewCourseModal,
                                           showConfirmDialog,
                                           hideConfirmDialog,
-                                          removeCourse
+                                          removeCourse,
+                                          manageCourse
                                          })(Course);

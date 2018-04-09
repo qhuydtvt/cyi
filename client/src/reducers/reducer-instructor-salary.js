@@ -1,14 +1,12 @@
-import { SHOW_ADD_INSTRUCTOR_SALARY_MODAL
+import { SHOW_ADD_INSTRUCTOR_SALARY_MODAL, HIDE_ADD_INSTRUCTOR_SALARY_MODAL
         } from '../actions';
 
-import _ from 'lodash';
-
 export default function(state = {}, action) {
-  var newState = null;
   switch (action.type) {
     case SHOW_ADD_INSTRUCTOR_SALARY_MODAL:
-      console.log(action.payload);
-      return {...state, isOpen: true};
+      return {...state, allCourses: action.payload.allCourses, instructor: action.payload.instructor, isOpen: true};
+    case HIDE_ADD_INSTRUCTOR_SALARY_MODAL:
+      return {...state, isOpen: false}
     default:
       return state;
   }

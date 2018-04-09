@@ -63,17 +63,19 @@ class InstructorRecordNew extends Component{
     const instructor = this.props.instructorRecordNew.instructor;
     const instructorId = instructor._id;
 
-    // NOTE for rightnow!!! : update saving record's course by id not by name anymore
     var course = values.course.value._id;
     var className = values.className;
 
     // reset class-name n course send to server
     className = this.updateClassName(values.course.value.name, className);
-    // course = this.updateCourse(course);
-
 
     const role = values.role.value;
-    const recordDate = values.recordDate;
+    var recordDate = values.recordDate;
+
+    // if recordDate does not contain hour => moment set hour by server's time => -1 day 
+    if (recordDate.toString().length === 10) {
+      recordDate += 'T00:00:00.001Z';
+    }
 
     this.props.hideAddIntructorModal();
     const infoCallback = () => {
@@ -170,15 +172,15 @@ class InstructorRecordNew extends Component{
     }
 
     return (
-          <Modal
-              isOpen={instructorRecordNew.isOpen}
-              toggle={this.props.hideAddIntructorModal}
-            >
-            <ModalHeader>{instructor.name}</ModalHeader>
-              <ModalBody>
-                  {this.renderAddRecordForm(instructor)}
-              </ModalBody>
-          </Modal>
+      <Modal
+          isOpen={instructorRecordNew.isOpen}
+          toggle={this.props.hideAddIntructorModal}
+        >
+        <ModalHeader>{instructor.name}</ModalHeader>
+          <ModalBody>
+              {this.renderAddRecordForm(instructor)}
+          </ModalBody>
+      </Modal>
     );
   }
 
@@ -255,7 +257,6 @@ function validate(values) {
     errors.course = 'Chưa chọn khóa học';
   }
 
-  // TODO check className length
   if (!values.className || !values.className.replace(/\s/g, '')) {
     errors.className = 'Chưa nhập lớp học';
   }
@@ -269,8 +270,7 @@ function validate(values) {
   return errors;
 }
 
-const tempComponent = connect(mapStateToProps,
-  { hideAddIntructorModal, addInstructorRecord, fetchCourse })(InstructorRecordNew);
+const tempComponent = connect(mapStateToProps, { hideAddIntructorModal, addInstructorRecord, fetchCourse })(InstructorRecordNew);
 
 export default reduxForm({
   validate,

@@ -68,25 +68,20 @@ class InstructorPayroll extends Component {
     setAttribute($payrollStatus, 'fa fa-lg fa-spinner fa-spin ml-4', 'Đang gửi bảng lương...');
 
     const successCallback = () => {
-      setAttribute($payrollStatus,
-                  'fa fa-lg fa-envelope ml-4 text-success',
-                  "Đã gửi bảng lương cho giảng viên"
-                );
+      setAttribute($payrollStatus, 'fa fa-lg fa-envelope ml-4 text-success', "Đã gửi bảng lương cho giảng viên");
     };
 
     const errorCallback = () => {
-      setAttribute($payrollStatus,
-                  'fa fa-lg fa-times-circle ml-4 text-danger',
-                  "Gửi lỗi"
-                );
+      setAttribute($payrollStatus, 'fa fa-lg fa-times-circle ml-4 text-danger', "Gửi lỗi");
     };
 
-    this.props.sendPayroll(instructor.code,
-                          this.props.summary.startDate,
-                          this.props.summary.endDate,
-                          errorCallback,
-                          successCallback
-                        )
+    this.props.sendPayroll(
+                            instructor.code,
+                            this.props.summary.startDate,
+                            this.props.summary.endDate,
+                            errorCallback,
+                            successCallback
+                          );
   }
 
   renderPaidStatus(paidTime) {
@@ -117,13 +112,13 @@ class InstructorPayroll extends Component {
   renderRole(role) {
     switch (role) {
       case 'instructor':
-        role = 'Giảng viên'
+        role = 'Giảng viên';
         break;
       case 'coach':
-        role = 'Trợ giảng'
+        role = 'Trợ giảng';
         break;
       default:
-        role = 'Undefined role'
+        role = 'Undefined role';
     }
     return role;
   }
@@ -153,7 +148,7 @@ class InstructorPayroll extends Component {
           <span className="font-weight-bold">Giảng viên: &nbsp;</span>
           <span>{data.instructor.name}</span>
           {this.renderPaidStatus(data.instructor.paidTime)}
-          <button className="btn btn-success float-right"
+          <button className="btn btn-secondary float-right"
             onClick={event => this.props.fetchInstructorSalary(this.props.summary.code)}
           >
             <i className="fa fa-pencil mr-3"></i>Điều chỉnh lương
@@ -187,7 +182,7 @@ class InstructorPayroll extends Component {
           <div className="my-5">
 
             <span className="col"></span>
-            <button className="btn btn-success float-right"
+            <button className="btn btn-danger float-right"
                onClick={event => this.handleSendPayroll(data.instructor)}
             >
                <i className="fa fa-paper-plane mr-3"></i>Gửi bảng lương
@@ -247,9 +242,18 @@ class InstructorPayroll extends Component {
 
   renderPayrollDetail(payrollDetails) {
     return (
-      <div className="mb-5">
-        <span className="font-weight-bold">Chi tiết chấm công trong tháng</span>
-        <Table striped className="my-5">
+      <div className="pt-5">
+        <hr/>
+        <div className="row justify-content-between pl-3 py-2">
+          <span className="font-weight-bold">Chi tiết chấm công trong tháng</span>
+          <button
+            className="btn btn-link float-right"
+            onClick={(event) => this.handleInstructorClick(this.props.summary.data.instructor)}
+          >
+            <i className="fa fa-plus mr-3"></i>Chấm công bù
+          </button>
+        </div>
+        <Table striped>
           <thead>
             <tr>
               <th>#</th>
@@ -280,10 +284,10 @@ class InstructorPayroll extends Component {
         {this.renderInstructorPayroll(summary.data)}
         {this.renderPayrollDetail(summary.data.instructor.payrollDetails)}
         <button
-          className="btn btn-success float-right mb-5"
+          className="btn btn-link float-right mb-5 pr-0"
           onClick={(event) => this.handleInstructorClick(summary.data.instructor)}
         >
-          <i className="fa fa-plus mr-3"></i>Chấm công mới
+          <i className="fa fa-plus mr-3"></i>Chấm công bù
         </button>
       </div>
     );

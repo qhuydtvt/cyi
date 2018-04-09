@@ -1,9 +1,11 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from './urls';
+import { API_URL } from './urls';
 
 export const FETCH_SUMMARY = "fetch summary";
 export const FETCH_INSTRUCTOR_PAYROLL = "fetch instructor payroll";
 export const SEND_INSTRUCTOR_PAYROLL = 'send instructor payroll';
+
+export const MANAGE_COURSE = 'manage course action';
 
 export const FETCH_INSTRUCTOR_SALARY = 'fetch salary';
 export const UPDATE_INSTRUCTOR_SALARY = 'update instructor salary';
@@ -14,7 +16,7 @@ const FETCH_SUMMARY_API = `${MANAGEMENT_API}summary`;
 const FETCH_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll`;
 
 const INSTRUCTOR_SALARY_API = `${MANAGEMENT_API}salary`;
-
+const COURSE_API = `${API_URL}/course`;
 const SEND_INSTRUCTOR_PAYROLL_API = `${MANAGEMENT_API}payroll/send`;
 
 export function fetchSummary(startDate, endDate, name, finishSearchCallback) {
@@ -90,5 +92,12 @@ export function fetchInstructorSalary(code) {
   return {
     type: FETCH_INSTRUCTOR_SALARY,
     payload: axios.get(`${INSTRUCTOR_SALARY_API}?code=${code}`)
+  }
+}
+
+export function manageCourse() {
+  return {
+    type: MANAGE_COURSE,
+    payload: axios.get(COURSE_API)
   }
 }

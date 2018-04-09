@@ -10,7 +10,12 @@ import $ from 'jquery';
 import User from '../helpers/user';
 import InstructorSalaryNewModal from '../helpers/instructor-salary-new-modal';
 
-import { fetchSummary, updateSalary, fetchInstructorPayroll, showAddInstructorSalaryModal } from '../../actions';
+import { fetchSummary, 
+        updateSalary, 
+        fetchInstructorPayroll, 
+        showAddInstructorSalaryModal,
+        fetchAllInstructor,
+        manageCourse } from '../../actions';
 
 class InstructorSalary extends Component {
 
@@ -148,47 +153,58 @@ class InstructorSalary extends Component {
           </Table>
 
           <div className="my-5">
-            <button
-              className="btn btn-primary float-left"
-              onClick={event => this.backToInstructorPayroll(event)}
-            >
-              <i className="fa fa-arrow-left mr-3"></i>Chi tiết lương giảng viên
-            </button>
-            <span className="col"></span>
             <button className="btn btn-success float-right" type="submit">
                <i className="fa fa-floppy-o mr-3"></i>Lưu bảng lương
             </button>
+            <span className="col"></span>
+            <span className="btn btn-link float-right" onClick={event => this.props.showAddInstructorSalaryModal(this.props.summary.data)}>
+              Thêm lương mới
+            </span>
           </div>
         </Form>
-        <button className="btn btn-link float-right" onClick={event => this.props.showAddInstructorSalaryModal()}>
-           Thêm lương mới
-        </button>
+        
       </div>
     )
   }
 
   render() {
-    const instructor = this.props.summary.data.instructor;
-    const salaries = instructor.salaries;
+    const summary = this.props.summary;
+    const instructor = summary.data.instructor;
+    const salaries = instructor ? instructor.salaries : [];
 
       return (
         <div className="container mt-3">
         <InstructorSalaryNewModal />
-          <div className="row">
-            <div className="row col-md-7 ml-1">
-              <button
-                className="btn btn-primary float-left mt-1"
-                style={{height: 38 + 'px'}}
-                onClick={event => this.backToSummary(event)}
-              >
-                <i className="fa fa-arrow-left mr-3"></i>Danh sách lương
-              </button>
-            </div>
-            < User/>
+
+          <div className="row px-3">
+            <button
+              className="btn btn-secondary float-left btn__height--primary mt-1"
+              onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
+            >
+              <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
+            </button>
+            <button className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
+              <i className='fa fa-users mr-3'></i>Quản lý giảng viên
+            </button>
+            <button className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
+              <i className='fa fa-book mr-3'></i>Quản lý khóa học
+            </button>
+            <User />
           </div>
+
+          <div className='d-flex my-3'>
+            <button 
+              className="btn btn-secondary float-left btn__height--primary"
+              onClick={event => this.backToInstructorPayroll(event)}
+            >
+              <i className="fa fa-user mr-3"></i>Lương GV <i>{instructor.name}</i>
+            </button>
+          </div>
+          <hr/>
+
           <div>
             <div className="my-5">
-              <span className="font-weight-bold">Bảng lương giảng viên: &nbsp;</span>
+              <span className="font-weight-bold">Lương chi tiết giảng viên: &nbsp;</span>
               <span>{instructor.name}</span>
               <span id="update-salary-status"></span>
             </div>
@@ -215,8 +231,12 @@ function validate(values) {
   return errors;
 }
 
-const tempComponent = connect(mapStateToProps,
-  { fetchSummary, updateSalary, fetchInstructorPayroll, showAddInstructorSalaryModal })(InstructorSalary);
+const tempComponent = connect(mapStateToProps, { fetchSummary, 
+                                                 updateSalary, 
+                                                 fetchInstructorPayroll, 
+                                                 showAddInstructorSalaryModal, 
+                                                 fetchAllInstructor,
+                                                 manageCourse })(InstructorSalary);
 
 export default reduxForm({
   validate,

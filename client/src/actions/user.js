@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from './urls'
+import { API_URL } from './urls'
 
 export const LOGIN = "login to checkin";
 export const CHANGE_PASSWORD = "change users password";

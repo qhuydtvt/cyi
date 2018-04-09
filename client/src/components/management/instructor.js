@@ -8,7 +8,9 @@ import { fetchAllInstructor,
          fetchSummary,
          showAddNewInstructorModal,
          showConfirmDialog, hideConfirmDialog,
-         removeInstructor } from '../../actions';
+         removeInstructor,
+         fetchCourse,
+         manageCourse } from '../../actions';
 
 import User from '../helpers/user';
 import InstructorNewModal from '../helpers/instructor-new-modal';
@@ -107,30 +109,35 @@ class Course extends Component {
     return (
       <div className="container my-3">
         <InstructorNewModal />
-        <div className="row container">
-          <div className="row col-md-7 ml-1">
-            <button
-              className="btn btn-primary float-left mt-1"
-              style={{height: 38 + 'px'}}
-              onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
-            >
-              <i className="fa fa-arrow-left mr-3"></i>Danh sách lương
-            </button>
-          </div>
+        <div className="row px-3">
+          <button
+            className="btn btn-secondary float-left btn__height--primary mt-1"
+            onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
+          >
+            <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
+          </button>
+          <button className='btn mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
+            <i className='fa fa-users mr-3'></i>Quản lý giảng viên
+          </button>
+          <button className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
+            <i className='fa fa-book mr-3'></i>Quản lý khóa học
+          </button>
           <User />
         </div>
-        <div className="my-5 container">
+        <hr/>
+        
+        <div className="my-5 container pl-0">
           <span className='h4 my-5'>Danh sách giảng viên</span>
           <button className='btn btn-success float-right'
                   onClick={event => this.props.showAddNewInstructorModal()}>
-              <i className='fa fa-plus mr-3'></i>Thêm mới giảng viên
+              <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
           </button>
         </div>
         {this.renderInstructors(this.props.instructorManagement.instructorData)}
         <div className="my-3 container">
           <button className='btn btn-success float-right mt-3 mb-5'
                   onClick={event => this.props.showAddNewInstructorModal()}>
-              <i className='fa fa-plus mr-3'></i>Thêm mới giảng viên
+              <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
           </button>
         </div>
       </div>
@@ -147,4 +154,4 @@ export default connect(mapStateToProps, { fetchAllInstructor,
                                           fetchSummary,
                                           showAddNewInstructorModal,
                                           showConfirmDialog, hideConfirmDialog,
-                                          removeInstructor })(Course);
+                                          removeInstructor, fetchCourse, manageCourse })(Course);

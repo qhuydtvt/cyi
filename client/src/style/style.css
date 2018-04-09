@@ -47,6 +47,10 @@ a {
   margin-top: 7px;
 }
 
+.btn__height--primary {
+  height: 38px;
+}
+
 .instructor {
   float: left;
   padding: 1vw;

@@ -12,7 +12,7 @@ class Loading extends Component {
   }
 }
 
-function mapStateToProps({ }) {
+function mapStateToProps() {
   return { };
 }
 
