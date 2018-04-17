@@ -141,7 +141,7 @@ class InstructorPayroll extends Component {
   }
 
   renderInstructorPayroll(data) {
-    var totalMonthSalary = this.moneyFormat(data.instructor.totalMonthSalary);
+    var totalMonthSalary = this.moneyFormat(data.totalMonthSalary);
     return (
       <div>
         <div className="instructor-infos">
@@ -282,7 +282,7 @@ class InstructorPayroll extends Component {
       <div>
         <InstructorRecordNew />
         {this.renderInstructorPayroll(summary.data)}
-        {this.renderPayrollDetail(summary.data.instructor.payrollDetails)}
+        {this.renderPayrollDetail(summary.data.payrollDetails)}
         <button
           className="btn btn-link float-right mb-5 pr-0"
           onClick={(event) => this.handleInstructorClick(summary.data.instructor)}

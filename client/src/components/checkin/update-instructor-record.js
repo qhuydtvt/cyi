@@ -10,7 +10,6 @@ import 'flatpickr/dist/themes/light.css';
 import Flatpickr from 'react-flatpickr';
 
 import _ from 'lodash';
-import moment from 'moment';
 
 import { NotificationManager } from 'react-notifications';
 
@@ -73,14 +72,8 @@ class InstructorRecordNew extends Component{
     const role = values.role.value;
     var recordDate = values.recordDate;
 
-    // don't khnow wtf happened with react-flatpickr, but when changing month it's return recordDate in an array ??
-    if (_.isArray(recordDate)) {
-      recordDate = recordDate[0];
-    }
-
     // if recordDate does not contain hour => moment set hour by server's time => -1 day 
-    if (!moment(recordDate).hour() && !moment(recordDate).minute() && !moment(recordDate).second()) {
-      recordDate = moment(recordDate).format('YYYY-MM-DD');
+    if (recordDate.toString().length === 10) {
       recordDate += 'T00:00:00.001Z';
     }
 

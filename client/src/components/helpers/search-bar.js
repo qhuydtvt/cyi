@@ -72,8 +72,8 @@ class SearchBar extends Component {
     return (
       <div id="search-bar" className="row px-0 col-md-7 ml-1">
         <input placeholder="Nhập tên giảng viên" type="text" className="col-md-11"
-         onChange={event => this.handleSearch(event.target.value)}></input>
-         {this.renderSearchIcon()}
+          onChange={event => this.handleSearch(event.target.value)}></input>
+          {this.renderSearchIcon()}
      </div>
     )
   }
@@ -83,9 +83,4 @@ function mapStateToProps({ searchBar, summary }) {
   return { searchBar, summary };
 }
 
-export default connect(mapStateToProps, { searchInstructor,
-                                          showSearchLoading,
-                                          hideSearchLoading,
-                                          fetchSummary 
-                                        }
-                                        )(SearchBar);
+export default connect(mapStateToProps, { searchInstructor, showSearchLoading, hideSearchLoading, fetchSummary })(SearchBar);
