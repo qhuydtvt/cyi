@@ -40,7 +40,7 @@ const rootReducer = combineReducers({
                 touched: false,
                 visited: false
               },
-              className: {
+              classNo: {
                 touched: false,
                 visited: false
               },
@@ -55,7 +55,7 @@ const rootReducer = combineReducers({
             },
             values: {
               course: {value: "", label: "Chọn khóa học..."},
-              className: "",
+              classNo: "",
               recordDate: new Date().toISOString(),
               role: {value: "instructor", label: "Giảng viên"}
             }
