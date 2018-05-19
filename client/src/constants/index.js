@@ -7,3 +7,5 @@ export const API_URL = `${ROOT_URL}/api`;
 export const MANAGEMENT_API_URL = `${API_URL}/management`;
 export const DEPARTMENT_API_URL = `${MANAGEMENT_API_URL}/department`;
 export const FEEDBACK_API_URL = `${MANAGEMENT_API_URL}/feedback`;
+export const COURSE_API_URL = `${API_URL}/course`;
+export const CLASS_API_URL = `${API_URL}/course/class`;

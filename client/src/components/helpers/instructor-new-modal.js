@@ -14,26 +14,30 @@ import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup } from 're
 import FileBase64 from 'react-file-base64';
 
 import { hideAddNewInstructorModal,
-         fetchCourse,
+         fetchCourses,
          addNewInstructor,
-         updateInstructor } from '../../actions';
+         updateInstructor,
+         fetchTeam } from '../../actions';
 
 class InstructorNew extends Component{
 
   constructor(props) {
     super(props);
-    this.props.fetchCourse();
+    this.props.fetchCourses();
+    this.props.fetchTeam();
     this.onSubmit = this.onSubmit.bind(this);
     this.validateInstructorCode = this.validateInstructorCode.bind(this);
   }
 
   onSubmit(values) {
     const { instructor } = this.props.instructorManagement;
-    var name = values.name;
-    var code = values.code;
+    var firstName = values.firstName;
+    var lastName = values.lastName;
+    
+    var teamId = values.team.value ? values.team.value._id : '';
     var email = values.email;
 
-    var image = values.image.base64 ? values.image.base64 : values.image;
+    var image = values.image ? values.image.base64 : values.image;
     var courses = _.map(values.courses, (course) => {
       return course.value._id;
     });
@@ -50,10 +54,10 @@ class InstructorNew extends Component{
     };
 
     if (!instructor) {
-      this.props.addNewInstructor({name, code, email, image, courses}, successCallback, errorCallback);
+      this.props.addNewInstructor({firstName, lastName, teamId, email, image, courses}, successCallback, errorCallback);
     } else {
       this.props.updateInstructor(instructor._id,
-                                  {name, code, email, image, courses},
+                                  {firstName, lastName, email, image, courses},
                                   successCallback,
                                   errorCallback);
     }
@@ -76,6 +80,7 @@ class InstructorNew extends Component{
     const allCourses = this.props.instructorManagement.allCourses;
 
     let updatingInstructor = this.props.instructorManagement.instructor;
+
     let selectedCourses = [];
     if (updatingInstructor) {
       _.forEach(updatingInstructor.courses, (course) => {
@@ -86,26 +91,33 @@ class InstructorNew extends Component{
       });
     }
 
+    var teams = this.props.instructorManagement.teamData;
+    
     return (
       <div>
         <Form className="submit-instructor-form" onSubmit={ handleSubmit(this.onSubmit) }>
+          {!updatingInstructor ? <Field
+            name = "team"
+            label = "Bộ phận giảng dạy"
+            teams = {teams}
+            component = {this.renderSelectTeamField}
+          /> : <div></div>}
           <Field
-            name = "name"
-            label = "Họ tên"
-            placeholder = "họ tên giảng viên"
-            component = { this.renderInputField }
+            name="lastName"
+            label="Họ"
+            placeholder="Họ"
+            component = { this.renderInputField } 
           />
           <Field
-            name = "code"
-            label = "Code"
-            placeholder = "code"
-            validate = {this.validateInstructorCode}
-            component = {this.renderInputField}
+            name = "firstName"
+            label = "Tên"
+            placeholder = "Tên"
+            component = { this.renderInputField }
           />
           <Field
             name = "email"
             label = "Email"
-            placeholder = "email"
+            placeholder = "Email"
             component = {this.renderInputField}
           />
           <Field
@@ -140,7 +152,7 @@ class InstructorNew extends Component{
           toggle={this.props.hideAddNewInstructorModal}
         >
         <ModalHeader>
-          { !instructorManagement.instructor ? 'Thêm mới giảng viên' : 'Cập nhật thông tin giảng viên' }
+          { !instructorManagement.instructor ? 'Thêm mới giảng viên' : `Giảng viên (${instructorManagement.instructor.code})` }
         </ModalHeader>
         <ModalBody>
             {this.renderInstructorForm(instructorManagement.instructor)}
@@ -178,6 +190,32 @@ class InstructorNew extends Component{
         <FileBase64
           onDone={(files) => field.input.onChange(files)}
           className="form-control ml-5"
+        />
+        <div className="form-text text-danger">
+          {touched ? error : ""}
+        </div>
+      </FormGroup>
+    );
+  }
+
+  renderSelectTeamField(field) {
+    const {meta: {touched, error}} = field;
+
+    var teamOptions = [];
+    _.forEach(field.teams, (team) => {
+      teamOptions.push({
+        'value': team,
+        'label': team.name
+      });
+    });
+
+    return (
+      <FormGroup>
+        <label className="h5">{field.label}</label>
+        <Select
+          options = {teamOptions}
+          disabled = {field.disabled}
+          {...field.input} onBlur = {() => field.input.onBlur(field.value)}
         />
         <div className="form-text text-danger">
           {touched ? error : ""}
@@ -228,16 +266,21 @@ function validate(values) {
     errors.name = 'Chưa nhập tên giảng viên';
   }
 
-  if (!values.code || !values.code.replace(/\s/g, '')) {
-    errors.code = 'Chưa nhập mã giảng viên';
-  }
-
   if (!values.email || !values.email.replace(/\s/g, '')) {
     errors.email = 'Chưa nhập email';
   }
 
   if (!values.image) {
-    errors.image = 'Chưa chọn ảnh';
+    // check if user is creating or updating instructor
+    // create: team.value = someValue
+    // update: team.value = null 
+    if (values.team.value) {
+      errors.image = 'Chưa chọn ảnh';
+    }
+  }
+
+  if (_.isEmpty(values.team)) {
+    errors.team = 'Chưa chọn bộ phận';
   }
 
   if (_.isEmpty(values.courses)) {
@@ -249,14 +292,15 @@ function validate(values) {
 
 const tempComponent = connect(mapStateToProps, {
     hideAddNewInstructorModal,
-    fetchCourse,
+    fetchCourses,
     addNewInstructor,
-    updateInstructor
+    updateInstructor,
+    fetchTeam
   })(InstructorNew);
 
 export default reduxForm({
   validate,
   form: "addNewInstructorForm",
   destroyOnUnmount: true,
-  initialValues : {name: "", code: "", email: "", image: "", courses: []}
+  initialValues : {firstName: "", lastName: "", team: "", email: "", image: "", courses: []}
 })(tempComponent);

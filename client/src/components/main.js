@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import Login from './user/login';
 import Checkin from './checkin/checkin';
 import CheckinSummary from './user/checkin-summary';
 import Management from './management/management';
+import CourseDetail from './management/CourseDetail';
 
 import { loadState, logout } from '../actions';
 
@@ -17,8 +19,13 @@ class Main extends Component {
   render() {
     const loginCredentials = this.props.loginCredentials;
     if (loginCredentials.loggedIn) {
-      if (loginCredentials.role === 'manager') {
-        return <Management />
+      if (loginCredentials.role === 'manager' || loginCredentials.role === 'accountant') {
+        return (
+          <Switch>
+            <Route path="/course/:id" component={CourseDetail} />
+            <Route path="/" component={Management} />
+          </Switch>
+        )
       } else if (loginCredentials.role === 'receptionist') {
         return <Checkin />
       } else if (loginCredentials.role === 'instructor') {

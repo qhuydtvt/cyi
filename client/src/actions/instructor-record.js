@@ -76,7 +76,7 @@ export function hideInstructorRecord(instructor) {
   };
 }
 
-export function addInstructorRecord(record, infoCallback, successCallback, errorCallback ) {
+export function addInstructorRecord(record, infoCallback, successCallback, errorCallback) {
   infoCallback();
   const request = axios.post(INSTRUCTOR_RECORD_API, record)
     .catch((err) => {
@@ -86,7 +86,7 @@ export function addInstructorRecord(record, infoCallback, successCallback, error
   const interceptor = function(response, error) {
     return new Promise((resolve, reject) => {
       if (!response.data || !response.data.success) {
-        errorCallback();
+        errorCallback(response.data.message);
         reject();
       }
       else {

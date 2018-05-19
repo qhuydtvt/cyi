@@ -4,6 +4,7 @@ export * from './management';
 export * from './salary';
 export * from './course';
 export * from './instructor';
+export * from './team';
 export * from './helpers';
 export * from './department';
 export * from './feedback';

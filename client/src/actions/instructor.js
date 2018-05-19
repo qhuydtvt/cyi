@@ -13,13 +13,16 @@ export const REMOVE_INSTRUCTOR = 'remove instructor';
 const INSTRUCTOR_API = `${API_URL}/instructor`;
 
 const ADD_NEW_INSTRUCTOR_API = INSTRUCTOR_API;
-const UPDATE_INSTRUCTOR_API = `${INSTRUCTOR_API}/update`;
+const UPDATE_INSTRUCTOR_API = INSTRUCTOR_API;
 const REMOVE_INSTRUCTOR_API = INSTRUCTOR_API;
 
-export function fetchAllInstructor() {
+export function fetchAllInstructor(searchName) {
+  // change searchName's value from undefined to ""
+  if (!searchName) {searchName = ""}
+
   return {
     type: FETCH_INSTRUCTOR,
-    payload: axios.get(`${INSTRUCTOR_API}/all`)
+    payload: axios.get(`${INSTRUCTOR_API}/all?name=${searchName}`)
   }
 }
 
@@ -63,7 +66,7 @@ export function addNewInstructor(instructor, successCallback, errorCallback ) {
 }
 
 export function updateInstructor(instructorId, instructor, successCallback, errorCallback ) {
-  const request = axios.post(`${UPDATE_INSTRUCTOR_API}/${instructorId}`, instructor)
+  const request = axios.patch(`${UPDATE_INSTRUCTOR_API}/${instructorId}`, instructor)
     .catch((err) => {
       errorCallback();
     });

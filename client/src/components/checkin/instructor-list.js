@@ -133,7 +133,7 @@ class InstructorList extends Component {
           <div className="card">
             <img className="card-img-top" src={instructor.image} alt="Card cap"/>
             <div className="card-block">
-              <h4 className="card-title">{instructor.name}</h4>
+              <h4 className="card-title">{instructor.lastName} {instructor.firstName}</h4>
               <div className="d-flex justify-between-content bottom">
                 {this.renderAddRecordButton(instructor)}
                 <a
@@ -152,7 +152,7 @@ class InstructorList extends Component {
           <div key={instructor._id} className="col-xl-4 col-lg-4 col-md-4 instructor">
             <div className="card">
               <div className="card-block">
-                <h4 className="card-title">{instructor.name}</h4>
+                <h4 className="card-title">{instructor.lastName} {instructor.firstName}</h4>
                 {this.renderTodayRecords(instructor)}
                 <div className="d-flex justify-between-content text-right bottom">
                   {this.renderAddRecordButton(instructor)}
@@ -167,6 +167,7 @@ class InstructorList extends Component {
 
   render() {
     const instructorList = this.props.instructorList;
+    
     if (!instructorList) {
       return <div className="container text-center h5 mt-5">Đang tải thông tin giảng viên....</div>
     } else if (_.isEmpty(instructorList)) {

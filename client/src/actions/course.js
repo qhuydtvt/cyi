@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { API_URL } from './urls';
+import { COURSE_API_URL } from '../constants';
+import { checkFields } from '../utils';
 
 export const FETCH_COURSE = 'fetch all course';
 
@@ -16,12 +18,29 @@ const ADD_NEW_COURSE_API = `${COURSE_API}/create`;
 const UPDATE_COURSE_API = `${COURSE_API}/update`;
 const REMOVE_COURSE_API = `${COURSE_API}/delete`;
 
-export function fetchCourse() {
+
+
+export function fetchCourses() {
   return {
     type: FETCH_COURSE,
     payload: axios.get(COURSE_API)
   }
 }
+
+// export function fetchCourse(courseId) {
+//   const request = axios.get(`${COURSE_API_URL}/${courseId}`);
+//   const interceptor = (response) => {
+//     return new Promise((resolve, reject) => {
+//       if(checkFields(response, 'data.success', 'data.course')) {
+//         resolve(response.data.course);
+//       }
+//       else {
+//         reject();
+//       }
+//     })
+//   };
+//   return request.then(interceptor);
+// }
 
 export function showAddNewCourseModal(course) {
   return {

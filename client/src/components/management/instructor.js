@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table } from 'reactstrap';
+import SearchBar from '../common/SearchBar';
 
 import _ from 'lodash';
 
@@ -9,8 +10,11 @@ import { fetchAllInstructor,
          showAddNewInstructorModal,
          showConfirmDialog, hideConfirmDialog,
          removeInstructor,
-         fetchCourse,
+         fetchCourses,
          manageCourse } from '../../actions';
+
+
+import './instructor.css';
 
 import User from '../helpers/user';
 import InstructorNewModal from '../helpers/instructor-new-modal';
@@ -39,7 +43,7 @@ class Course extends Component {
         this.props.hideConfirmDialog();
       };
       this.props.showConfirmDialog("Xóa giảng viên",
-                                   `Bạn có chắc muốn xóa thông tin giảng viên ${instructor.name} ?`,
+                                   `Bạn có chắc muốn xóa thông tin giảng viên ${instructor.lastName} ${instructor.firstName} ?`,
                                    onYesClick, onNoClick);
     }
   }
@@ -48,7 +52,8 @@ class Course extends Component {
     return (
       <tr key={index}>
         <th scope="row">{index + 1}</th>
-        <td>{instructor.name}</td>
+        <td>{instructor.lastName}</td>
+        <td>{instructor.firstName}</td>
         <td>{instructor.code}</td>
         <td>{instructor.email}</td>
         <td><a href={instructor.image} target='_blank'>Xem</a></td>
@@ -63,7 +68,7 @@ class Course extends Component {
         </td>
         <td>
           <i
-            className='course-action text-success fa fa-pencil fa-lg mx-3'
+            className='course-action text-success fas fa-pencil-alt fa-lg mx-3'
             title='Sửa thông tin'
             onClick = {event => this.props.showAddNewInstructorModal(instructor)}
           >
@@ -85,7 +90,8 @@ class Course extends Component {
         <thead>
           <tr>
             <th>#</th>
-            <th>Họ tên</th>
+            <th>Họ</th>
+            <th>Tên</th>
             <th>Code</th>
             <th>Email</th>
             <th>Ảnh</th>
@@ -106,6 +112,11 @@ class Course extends Component {
 
   render() {
     const { summary } = this.props;
+
+    var userRole = localStorage.getItem("role");
+
+    const isManager = (userRole === 'manager');
+
     return (
       <div className="container my-3">
         <InstructorNewModal />
@@ -116,34 +127,49 @@ class Course extends Component {
           >
             <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
           </button>
-          <button className='btn mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
-            <i className='fa fa-users mr-3'></i>Quản lý giảng viên
-          </button>
-          <button className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
-            <i className='fa fa-book mr-3'></i>Quản lý khóa học
-          </button>
-          <User />
+          {  
+            <button disabled={!isManager} className='btn mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
+              <i className='fa fa-users mr-3'></i>Quản lý giảng viên
+            </button>
+          }
+          {
+            <button disabled={!isManager} className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
+              <i className='fa fa-book mr-3'></i>Quản lý khóa học
+            </button>
+          }
+          <User className="col-p" />
         </div>
         <hr/>
-        
-        <div className="my-5 container pl-0">
-          <span className='h4 my-5'>Danh sách giảng viên</span>
-          <button className='btn btn-success float-right'
-                  onClick={event => this.props.showAddNewInstructorModal()}>
-              <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
-          </button>
-        </div>
-        {this.renderInstructors(this.props.instructorManagement.instructorData)}
-        <div className="my-3 container">
-          <button className='btn btn-success float-right mt-3 mb-5'
-                  onClick={event => this.props.showAddNewInstructorModal()}>
-              <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
-          </button>
-        </div>
+        {
+          isManager ?
+          (
+            <div>
+              <div className="my-4 container pl-0">
+              <span className='h4 my-5'>Danh sách giảng viên</span>
+              <button className='btn btn-success float-right' onClick={event => this.props.showAddNewInstructorModal()}>
+                <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
+              </button>
+              </div>
+              <SearchBar
+                className="my-4 searchbar"
+                placeholder="Nhập tên giảng viên"
+                onChange={(value) => this.props.fetchAllInstructor(value)} />
+              {this.renderInstructors(this.props.instructorManagement.instructorData)}
+              <div className="my-3 container">
+                <button className='btn btn-success float-right mt-3 mb-5' onClick={event => this.props.showAddNewInstructorModal()}>
+                  <i className='fa fa-user-plus mr-3'></i>Thêm mới giảng viên
+                </button>
+              </div>
+            </div>
+          )
+          :
+          (
+            <h3 className="text-danger">Chức năng chỉ dành cho quản lý!</h3>
+          )
+        }
       </div>
     );
   }
-
 }
 
 function mapStateToProps({ instructorManagement, summary }) {
@@ -154,4 +180,4 @@ export default connect(mapStateToProps, { fetchAllInstructor,
                                           fetchSummary,
                                           showAddNewInstructorModal,
                                           showConfirmDialog, hideConfirmDialog,
-                                          removeInstructor, fetchCourse, manageCourse })(Course);
+                                          removeInstructor, fetchCourses, manageCourse })(Course);

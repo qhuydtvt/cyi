@@ -1,0 +1,22 @@
+body {
+  background-color: #e9ebee;
+  min-height: 100vh;
+}
+
+.panel {
+  padding: 16px;
+  margin: 8px;
+  background-color: #FFFFFF;
+}
+
+.general {
+  flex-grow: 4;
+}
+
+.class-list {
+  flex-grow: 6;
+}
+
+.h-full {
+  min-height: 100vh;
+}

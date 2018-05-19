@@ -157,8 +157,8 @@ class InstructorSalary extends Component {
                <i className="fa fa-floppy-o mr-3"></i>Lưu bảng lương
             </button>
             <span className="col"></span>
-            <span className="btn btn-link float-right" onClick={event => this.props.showAddInstructorSalaryModal(this.props.summary.data)}>
-              Thêm lương mới
+            <span className="btn btn-link mr-2 float-right" onClick={event => this.props.showAddInstructorSalaryModal(this.props.summary.data)}>
+              <i className="fa fa-plus mr-2"></i>Thêm lương mới
             </span>
           </div>
         </Form>
@@ -171,6 +171,8 @@ class InstructorSalary extends Component {
     const summary = this.props.summary;
     const instructor = summary.data.instructor;
     const salaries = instructor ? instructor.salaries : [];
+    var userRole = localStorage.getItem("role");
+    const isManager = (userRole === 'manager');
 
       return (
         <div className="container mt-3">
@@ -183,10 +185,10 @@ class InstructorSalary extends Component {
             >
               <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
             </button>
-            <button className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
+            <button disabled={!isManager} className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>
               <i className='fa fa-users mr-3'></i>Quản lý giảng viên
             </button>
-            <button className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
+            <button disabled={!isManager} className='btn btn-secondary btn__height--primary mt-1' onClick={event => this.props.manageCourse()}>
               <i className='fa fa-book mr-3'></i>Quản lý khóa học
             </button>
             <User />
@@ -197,7 +199,7 @@ class InstructorSalary extends Component {
               className="btn btn-secondary float-left btn__height--primary"
               onClick={event => this.backToInstructorPayroll(event)}
             >
-              <i className="fa fa-user mr-3"></i>Lương GV <i>{instructor.name}</i>
+              <i className="fa fa-user mr-3"></i>Lương GV <i>{instructor.lastName} {instructor.firstName}</i>
             </button>
           </div>
           <hr/>
@@ -205,7 +207,7 @@ class InstructorSalary extends Component {
           <div>
             <div className="my-5">
               <span className="font-weight-bold">Lương chi tiết giảng viên: &nbsp;</span>
-              <span>{instructor.name}</span>
+              <span>{instructor.lastName} {instructor.firstName}</span>
               <span id="update-salary-status"></span>
             </div>
 

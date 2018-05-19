@@ -14,18 +14,18 @@ import moment from 'moment';
 
 import { NotificationManager } from 'react-notifications';
 
-import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup, CheckBox } from 'reactstrap';
 
-import { hideAddIntructorModal, addInstructorRecord, fetchCourse } from '../../actions';
+import { hideAddIntructorModal, addInstructorRecord, fetchCourses } from '../../actions';
 
 class InstructorRecordNew extends Component{
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.fetchCourse();
+    this.props.fetchCourses();
   }
 
-  updateCourse = (course) => {
+  updateCourse(course){
     if (course.indexOf('IELTS L&R') >= 0) {
       course = 'IELTS L&R';
     }
@@ -43,7 +43,7 @@ class InstructorRecordNew extends Component{
     return course;
   }
 
-  getClassName = (course, classNo) => {
+  getClassName(course, classNo){
     var preName = ' ';
 
     if (course.indexOf('CFA') >= 0) {
@@ -68,6 +68,8 @@ class InstructorRecordNew extends Component{
 
     var classNo = values.classNo;
 
+    var forcedSave = values.forcedSave;
+
     // reset class-name n course send to server
     var className = this.getClassName(values.course.value.name, classNo);
 
@@ -87,15 +89,15 @@ class InstructorRecordNew extends Component{
 
     this.props.hideAddIntructorModal();
     const infoCallback = () => {
-      NotificationManager.info(`Đang chấm công cho: ${instructor.name} ...`);
+      NotificationManager.info(`Đang chấm công cho: ${instructor.lastName} ${instructor.firstName} ...`);
     };
 
     const successCallback = () => {
-      NotificationManager.success(`Đã chấm công cho: ${instructor.name}`);
+      NotificationManager.success(`Đã chấm công cho: ${instructor.lastName} ${instructor.firstName}`);
     };
 
-    const errorCallback = () => {
-      NotificationManager.error(`Không chấm được cho: ${instructor.name}`);
+    const errorCallback = (message) => {
+      NotificationManager.error(`Không chấm được cho: ${instructor.lastName} ${instructor.firstName}. ${message}`);
     };
 
     this.props.addInstructorRecord({
@@ -104,7 +106,8 @@ class InstructorRecordNew extends Component{
       className,
       classNo,
       role,
-      recordDate
+      recordDate,
+      forcedSave
     },
       infoCallback,
       successCallback,
@@ -163,6 +166,11 @@ class InstructorRecordNew extends Component{
             label="Ngày"
             component = {this.renderDateField}
           />
+          <Field
+            name="forcedSave"
+            label="Chấp nhận quá số buổi"
+            component = {this.renderCheckBoxField}
+          />
           <div className="mt-2">
             <button type="submit" className="btn btn-primary">Hoàn tất</button>
           </div>
@@ -170,7 +178,6 @@ class InstructorRecordNew extends Component{
       </div>
     );
   }
-
 
   render() {
     const instructorRecordNew = this.props.instructorRecordNew;
@@ -185,11 +192,22 @@ class InstructorRecordNew extends Component{
           isOpen={instructorRecordNew.isOpen}
           toggle={this.props.hideAddIntructorModal}
         >
-        <ModalHeader>{instructor.name}</ModalHeader>
+        <ModalHeader>{instructor.lastName} {instructor.firstName}</ModalHeader>
           <ModalBody>
               {this.renderAddRecordForm(instructor)}
           </ModalBody>
       </Modal>
+    );
+  }
+
+  renderCheckBoxField(field) {
+    return (
+      <FormGroup check className="my-4">
+        <Label check className="h5">
+          <Input type="checkbox" {...field.input} /> {' '}
+          {field.label}
+        </Label>
+      </FormGroup>
     );
   }
 
@@ -279,7 +297,7 @@ function validate(values) {
   return errors;
 }
 
-const tempComponent = connect(mapStateToProps, { hideAddIntructorModal, addInstructorRecord, fetchCourse })(InstructorRecordNew);
+const tempComponent = connect(mapStateToProps, { hideAddIntructorModal, addInstructorRecord, fetchCourses })(InstructorRecordNew);
 
 export default reduxForm({
   validate,
@@ -288,6 +306,7 @@ export default reduxForm({
   initialValues : {
     course: {value: "", label: "Chọn khóa học..."},
     classNo: "",
+    forcedSave: false,
     recordDate: new Date().toISOString(),
     role: {value: "instructor", label: "Giảng Viên"}
   }

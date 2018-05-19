@@ -3,6 +3,7 @@ import { FETCH_INSTRUCTOR,
          SHOW_ADD_NEW_INSTRUCTOR_MODAL,
          HIDE_ADD_NEW_INSTRUCTOR_MODAL,
          FETCH_COURSE,
+         FETCH_TEAMS,
          ADD_NEW_INSTRUCTOR,
          UPDATE_INSTRUCTOR,
          REMOVE_INSTRUCTOR
@@ -10,6 +11,9 @@ import { FETCH_INSTRUCTOR,
 
 export default function(state = {}, action) {
   switch (action.type) {
+    case FETCH_TEAMS:
+      return {...state, teamData: action.payload.data.teams};
+
     case FETCH_INSTRUCTOR:
       return {...state, instructorData: action.payload.data.instructors};
     case SHOW_ADD_NEW_INSTRUCTOR_MODAL:

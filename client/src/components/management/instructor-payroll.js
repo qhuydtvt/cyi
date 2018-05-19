@@ -142,17 +142,32 @@ class InstructorPayroll extends Component {
 
   renderInstructorPayroll(data) {
     var totalMonthSalary = this.moneyFormat(data.totalMonthSalary);
+
+    var userRole = localStorage.getItem('role');
+
+    var updateInstrSalBtn = userRole === 'manager' ? (
+      <div></div>
+    ) : (
+      <button className="btn btn-secondary float-right" onClick={event => this.props.fetchInstructorSalary(this.props.summary.code)}>
+        <i className="fas fa-pencil-alt mr-3"></i>Điều chỉnh lương
+      </button>
+    )
+
+    var sendPayrollBtn = userRole === 'manager' ? (
+      <div></div>
+    ) : (
+      <button className="btn btn-danger float-right" onClick={event => this.handleSendPayroll(data.instructor)}>
+        <i className="fa fa-paper-plane mr-3"></i>Gửi bảng lương
+      </button>
+    )
+    
     return (
       <div>
         <div className="instructor-infos">
           <span className="font-weight-bold">Giảng viên: &nbsp;</span>
-          <span>{data.instructor.name}</span>
+          <span>{data.instructor.lastName} {data.instructor.firstName}</span>
           {this.renderPaidStatus(data.instructor.paidTime)}
-          <button className="btn btn-secondary float-right"
-            onClick={event => this.props.fetchInstructorSalary(this.props.summary.code)}
-          >
-            <i className="fa fa-pencil mr-3"></i>Điều chỉnh lương
-          </button>
+          {updateInstrSalBtn}
         </div>
         <div>
           <span className="font-weight-bold">Email: &nbsp;</span>
@@ -182,11 +197,8 @@ class InstructorPayroll extends Component {
           <div className="my-5">
 
             <span className="col"></span>
-            <button className="btn btn-danger float-right"
-               onClick={event => this.handleSendPayroll(data.instructor)}
-            >
-               <i className="fa fa-paper-plane mr-3"></i>Gửi bảng lương
-            </button>
+              {sendPayrollBtn}
+               
           </div>
         </div>
       </div>

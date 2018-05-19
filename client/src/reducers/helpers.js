@@ -12,8 +12,9 @@ var getInstructorNewModalDefaultState = (instructor) => {
     });
 
     values = {
-      name: instructor.name,
-      code: instructor.code,
+      firstName: instructor.firstName,
+      lastName: instructor.lastName,
+      team: {'value': null, 'label': instructor.code},
       email: instructor.email,
       image: instructor.image,
       courses: courseOptions
@@ -21,8 +22,9 @@ var getInstructorNewModalDefaultState = (instructor) => {
 
   } else {
       values = {
-        name: "",
-        code: "",
+        firstName: "",
+        lastName: "",
+        team: "",
         email: "",
         image: "",
         courses: []
@@ -31,8 +33,9 @@ var getInstructorNewModalDefaultState = (instructor) => {
 
   return {
     fields : {
-      name: {touched: false, visited: false},
-      code: {touched: false, visited: false},
+      firstName: {touched: false, visited: false},
+      lastName: {touched: false, visited: false},
+      team: {touched: false, visited: false},
       email: {touched: false, visited: false},
       image: {touched: false, visited: false},
       courses: {touched: false, visited: false}

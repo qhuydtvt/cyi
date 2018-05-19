@@ -15,13 +15,13 @@ import { NotificationManager } from 'react-notifications';
 
 import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup } from 'reactstrap';
 
-import { hideAddIntructorModal, addInstructorRecord, fetchCourse } from '../../actions';
+import { hideAddIntructorModal, addInstructorRecord, fetchCourses } from '../../actions';
 
 class InstructorRecordNew extends Component{
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.props.fetchCourse();
+    this.props.fetchCourses();
   }
 
   updateCourse = (course) => {
@@ -79,15 +79,15 @@ class InstructorRecordNew extends Component{
 
     this.props.hideAddIntructorModal();
     const infoCallback = () => {
-      NotificationManager.info(`Đang chấm công cho: ${instructor.name} ...`);
+      NotificationManager.info(`Đang chấm công cho: ${instructor.lastName} ${instructor.firstName} ...`);
     };
 
     const successCallback = () => {
-      NotificationManager.success(`Đã chấm công cho: ${instructor.name}`);
+      NotificationManager.success(`Đã chấm công cho: ${instructor.lastName} ${instructor.firstName}`);
     };
 
     const errorCallback = () => {
-      NotificationManager.error(`Không chấm được cho: ${instructor.name}`);
+      NotificationManager.error(`Không chấm được cho: ${instructor.lastName} ${instructor.firstName}`);
     };
 
     this.props.addInstructorRecord({
@@ -176,7 +176,7 @@ class InstructorRecordNew extends Component{
           isOpen={instructorRecordNew.isOpen}
           toggle={this.props.hideAddIntructorModal}
         >
-        <ModalHeader>{instructor.name}</ModalHeader>
+        <ModalHeader>{instructor.lastName} {instructor.firstName}</ModalHeader>
           <ModalBody>
               {this.renderAddRecordForm(instructor)}
           </ModalBody>
@@ -270,7 +270,7 @@ function validate(values) {
   return errors;
 }
 
-const tempComponent = connect(mapStateToProps, { hideAddIntructorModal, addInstructorRecord, fetchCourse })(InstructorRecordNew);
+const tempComponent = connect(mapStateToProps, { hideAddIntructorModal, addInstructorRecord, fetchCourses })(InstructorRecordNew);
 
 export default reduxForm({
   validate,
