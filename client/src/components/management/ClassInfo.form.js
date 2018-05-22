@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import  { withFormik, Formik } from 'formik';
+import  { Formik } from 'formik';
 import {Form, FormGroup, Input, Label, Button} from 'reactstrap';
-import _ from 'lodash';
 
 class ClassInfoForm extends Component {
   constructor(props) {
@@ -23,15 +22,12 @@ class ClassInfoForm extends Component {
 
   renderForm(formProps) {
     const {
-      values,
       errors,
       touched,
       handleChange,
       handleBlur,
       handleSubmit,
-      isSubmitting,
     } = formProps;
-    const { course, classNo, maxSession } = values;
     return (
       <Form onSubmit={handleSubmit}>
         <FormGroup>

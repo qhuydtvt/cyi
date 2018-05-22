@@ -121,13 +121,14 @@ class Management extends Component {
 
   renderSummaryRow(payrollDetail, index) {
     var totalSalary = this.moneyFormat(payrollDetail.totalSalary);
+
     return (
       <tr key={index}
           className="instructor-summary"
           title="Xem chi tiết"
           onClick={event => this.fetchInstructorSummary(payrollDetail.code)}
       >
-        <th scope="row">{payrollDetail.name}</th>
+        <th scope="row">{payrollDetail.lastName} {payrollDetail.firstName}</th>
         <td className="pl-5">{payrollDetail.totalClass}</td>
         <td className="text-right pr-5">{totalSalary} VND</td>
         <td></td>

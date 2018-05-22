@@ -160,7 +160,7 @@ class InstructorPayroll extends Component {
         <i className="fa fa-paper-plane mr-3"></i>Gửi bảng lương
       </button>
     )
-    
+  
     return (
       <div>
         <div className="instructor-infos">

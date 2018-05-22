@@ -14,7 +14,7 @@ import moment from 'moment';
 
 import { NotificationManager } from 'react-notifications';
 
-import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup, CheckBox } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Form, Label, Input, FormGroup } from 'reactstrap';
 
 import { hideAddIntructorModal, addInstructorRecord, fetchCourses } from '../../actions';
 

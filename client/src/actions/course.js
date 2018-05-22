@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { API_URL } from './urls';
-import { COURSE_API_URL } from '../constants';
-import { checkFields } from '../utils';
 
 export const FETCH_COURSE = 'fetch all course';
 

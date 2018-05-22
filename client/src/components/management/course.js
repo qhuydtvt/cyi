@@ -105,7 +105,6 @@ class Course extends Component {
 
     var userRole = localStorage.getItem("role");
     
-    var userRole = localStorage.getItem("role");
     const isManager = (userRole === 'manager');
   
     if (userRole === 'manager') {

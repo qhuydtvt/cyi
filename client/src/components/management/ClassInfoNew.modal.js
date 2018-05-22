@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Button, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 import ClassInfoForm from './ClassInfo.form';
 
 export default class ClassInfoNewModal extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

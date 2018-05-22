@@ -124,12 +124,12 @@ class CourseDetail extends Component {
   }
 
   renderClassRange(startClassNo, endClassNo) {
-    if (startClassNo == endClassNo - 1 || startClassNo == endClassNo) {
+    if (startClassNo === endClassNo - 1 || startClassNo === endClassNo) {
       return (<span>
         Lớp <b>{startClassNo}</b>
       </span>);
     }
-    else if(endClassNo == -1) {
+    else if(endClassNo === -1) {
       return (
         <span>
           Từ lớp <b>{startClassNo}</b> trở đi
@@ -152,7 +152,7 @@ class CourseDetail extends Component {
     const classInfoList = _.values(classInfoDict);
   
     const sorted = _.sortBy(classInfoList, "classNo");
-    if(sorted[0].classNo != 1) {
+    if(sorted[0].classNo !== 1) {
       sorted.unshift({
         classNo: 1,
         maxSession: sorted[0].maxSession

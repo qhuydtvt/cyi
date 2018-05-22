@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Form, FormGroup, Label, Button } from 'reactstrap';
-import  { withFormik, Formik } from 'formik';
+import  { Formik } from 'formik';
 import _ from 'lodash';
 
 class CourseGeneralForm extends Component {
@@ -29,7 +29,6 @@ class CourseGeneralForm extends Component {
       handleChange,
       handleBlur,
       handleSubmit,
-      isSubmitting,
     } = formProps;
 
     const { name, description } = values;

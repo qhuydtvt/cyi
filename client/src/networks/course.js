@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import axios from 'axios';
 import { COURSE_API_URL } from '../constants';
 import { checkFields } from '../utils';
