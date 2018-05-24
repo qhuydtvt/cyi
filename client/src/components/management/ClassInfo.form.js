@@ -23,11 +23,13 @@ class ClassInfoForm extends Component {
   renderForm(formProps) {
     const {
       errors,
+      values,
       touched,
       handleChange,
       handleBlur,
       handleSubmit,
     } = formProps;
+    const { classNo, maxSession } = values;
     return (
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -35,10 +37,11 @@ class ClassInfoForm extends Component {
           <Input
             type="number"
             name="classNo"
+            value={classNo}
             invalid={touched.classNo && errors.classNo}
             onChange={handleChange}
             onBlur={handleBlur}
-           />
+          />
           <div className="text-danger">{touched.classNo? errors.classNo : ""}</div>
         </FormGroup>
         <FormGroup>
@@ -46,6 +49,7 @@ class ClassInfoForm extends Component {
           <Input
             type="number"
             name="maxSession"
+            value={maxSession}
             invalid={touched.maxSession && errors.maxSession}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -59,9 +63,6 @@ class ClassInfoForm extends Component {
       </Form>
     );
   }
-
-  // onSubmit(values, {setSubmitting, setErrors}) {
-  // }
 
   render() {
     return (

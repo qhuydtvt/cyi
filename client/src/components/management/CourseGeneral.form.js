@@ -43,7 +43,7 @@ class CourseGeneralForm extends Component {
             type="text"
             name="name"
             value={name}
-            invalid={touched.name && errors.name} 
+            invalid={!!touched.name && !!errors.name} 
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -56,7 +56,7 @@ class CourseGeneralForm extends Component {
             type="textarea"
             name="description"
             value={description}
-            invalid={touched.description && errors.description}
+            invalid={!!touched.description && !!errors.description}
             onChange={handleChange}
             onBlur={handleBlur} 
           />

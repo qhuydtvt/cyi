@@ -10,13 +10,13 @@ export const ADD_NEW_COURSE = 'add new course';
 export const UPDATE_COURSE = 'update course';
 export const REMOVE_COURSE = 'remove course';
 
+export const REMOVE_CLASS_INFO = 'remove class';
+
 const COURSE_API = `${API_URL}/course`;
 
 const ADD_NEW_COURSE_API = `${COURSE_API}/create`;
 const UPDATE_COURSE_API = `${COURSE_API}/update`;
 const REMOVE_COURSE_API = `${COURSE_API}/delete`;
-
-
 
 export function fetchCourses() {
   return {

@@ -1,2 +1,2 @@
-export { fetchCourse } from './course';
-export { addOrEditClassInfo } from './classInfo';
+export { fetchCourse, editCourse } from './course';
+export { addOrEditClassInfo, deleteClassInfo } from './classInfo';
