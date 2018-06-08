@@ -196,8 +196,8 @@ class InstructorPayroll extends Component {
           <span>{totalMonthSalary} VND</span>
           <div className="my-5">
 
-            <span className="col"></span>
-              {sendPayrollBtn}
+          <span className="col"></span>
+          {sendPayrollBtn}
                
           </div>
         </div>
@@ -206,7 +206,7 @@ class InstructorPayroll extends Component {
   }
 
   renderRecordTime(time) {
-    var hour = moment(time).hour();
+    var hour = time.slice(11, 13);
     var min = moment(time).minute();
 
     var end = 'AM';
@@ -226,18 +226,39 @@ class InstructorPayroll extends Component {
     return `${hourString}:${minString} ${end}`;
   }
 
-  renderPayrollDetailRow(detail, index) {
+  getPayrollDetailRowClassName(payrollDetails, detailToCompare) {
+    let className, title;
 
+    payrollDetails.forEach(detail => {
+      if (detail.className === detailToCompare.className && detail._id !== detailToCompare._id) {
+        if (detail.recordDate.slice(0, 10) === detailToCompare.recordDate.slice(0, 10)) {
+          className = "bg-warning";
+          title = "Trùng chấm công";
+        }
+      }
+    });
+
+    return { className, title };
+  }
+
+  renderPayrollDetailRow(payrollDetails, detail, index) {
+    
     var role = this.renderRole(detail.role);
-    var day = moment(detail.recordDate).format('DD/MM/YYYY');
+
+    // stupid code
+    var day = detail.recordDate.slice(8, 10);
+    var month = detail.recordDate.slice(5, 7);
+    var year = detail.recordDate.slice(0, 4);
+
     var time = this.renderRecordTime(detail.addedDate);
+    let { className, title } = this.getPayrollDetailRowClassName(payrollDetails, detail);
 
     return (
-      <tr key={index}>
+      <tr key={index} className={className} title={title}>
         <th scope="row">{index + 1}</th>
         <td>{detail.className}</td>
         <td>{role}</td>
-        <td>{day}</td>
+        <td>{`${day}/${month}/${year}`}</td>
         <td>{time}</td>
         <td>
         <button
@@ -245,7 +266,7 @@ class InstructorPayroll extends Component {
           title="Xóa lượt chấm công này"
           onClick={(event) => this.showConfirmDialog(detail)}
           disabled={this.deleted}
-          >
+        >
         </button>
         </td>
       </tr>
@@ -279,7 +300,7 @@ class InstructorPayroll extends Component {
           <tbody>
             {
               _.map(payrollDetails, (detail, index) => {
-                return this.renderPayrollDetailRow(detail, index)
+                return this.renderPayrollDetailRow(payrollDetails, detail, index)
               })
             }
           </tbody>

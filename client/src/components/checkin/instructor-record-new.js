@@ -60,6 +60,28 @@ class InstructorRecordNew extends Component{
     return course + preName + classNo;
   }
 
+  getAddedDate() {
+    // this is stupid
+    const addZezoToNumber = (numb) => {
+      if (numb < 10) return '0' + numb;
+      return numb;
+    }
+
+    let addedDate = moment();
+    let year, month, day, hour, min, second;
+    year = addedDate.year();
+
+    month = addZezoToNumber(parseInt(addedDate.month() + 1, 10));
+    day = addZezoToNumber(parseInt(addedDate.date(), 10));
+    hour = addZezoToNumber(parseInt(addedDate.hour(), 10));
+    min = addZezoToNumber(parseInt(addedDate.minute(), 10));
+    second = addZezoToNumber(parseInt(addedDate.second(), 10));
+    
+    addedDate = `${year}-${month}-${day}T${hour}:${min}:${second}.001Z`;
+
+    return addedDate
+  }
+
   onSubmit(values) {
     const instructor = this.props.instructorRecordNew.instructor;
     const instructorId = instructor._id;
@@ -75,6 +97,8 @@ class InstructorRecordNew extends Component{
 
     const role = values.role.value;
     var recordDate = values.recordDate;
+    
+    var addedDate = this.getAddedDate();
 
     // don't khnow wtf happened with react-flatpickr, but when changing month it's return recordDate in an array ??
     if (_.isArray(recordDate)) {
@@ -107,6 +131,7 @@ class InstructorRecordNew extends Component{
       classNo,
       role,
       recordDate,
+      addedDate,
       forcedSave
     },
       infoCallback,

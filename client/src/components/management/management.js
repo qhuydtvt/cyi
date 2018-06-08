@@ -214,7 +214,7 @@ class Management extends Component {
                 className={summaryButtonClass}
                 onClick={event => this.props.fetchSummary(summary.startDate, summary.endDate, '')}
               >
-                <i className="fa fa-file-text-o mr-3"></i>Lương tất cả giảng viên
+                <i className="fas fa-list mr-3"></i>Lương tất cả giảng viên
               </button>
               
               <button disabled={!isManager} className='btn btn-secondary mx-3 btn__height--primary mt-1' onClick={event => this.props.fetchAllInstructor()}>

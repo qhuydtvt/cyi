@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import  { Formik } from 'formik';
-import {Form, FormGroup, Input, Label, Button} from 'reactstrap';
+import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 
 class ClassInfoForm extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ class ClassInfoForm extends Component {
 
   validate(values) {
     const errors = {};
+
     if(!values.classNo) {
       errors.classNo = "Số hiệu lớp không được để trống";
     }
@@ -29,7 +30,9 @@ class ClassInfoForm extends Component {
       handleBlur,
       handleSubmit,
     } = formProps;
+
     const { classNo, maxSession } = values;
+
     return (
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -42,7 +45,7 @@ class ClassInfoForm extends Component {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <div className="text-danger">{touched.classNo? errors.classNo : ""}</div>
+          <div className="text-danger">{touched.classNo ? errors.classNo : ""}</div>
         </FormGroup>
         <FormGroup>
           <Label>Số buổi</Label>
@@ -54,7 +57,7 @@ class ClassInfoForm extends Component {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <div className="text-danger">{touched.maxSession? errors.maxSession : ""}</div>
+          <div className="text-danger">{touched.maxSession ? errors.maxSession : ""}</div>
         </FormGroup>
         <div className="d-flex justify-content-end">
           <Button onClick={this.props.onCancel} color="secondary">Cancel</Button>
